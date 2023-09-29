@@ -8,13 +8,13 @@ function App() {
   const refTest = useRef<HTMLDivElement>(null);
 
   const onReady = (e: YouTubeEvent) => {
-    const iframe = refTest.current?.querySelector("iframe");
-    e.target.setVolume(0);
-    console.log(iframe);
+    e.target.mute();
+  };
+
+  const onPlay = (e: YouTubeEvent) => {
     setTimeout(() => {
-      iframe?.click();
-      console.log("왜안됨");
-    }, 2000);
+      e.target.loadVideoById('SPjB51Sy9zY', undefined, undefined);
+    }, 5000);
   };
 
   const opts: YouTubeProps['opts'] = {
@@ -22,7 +22,8 @@ function App() {
     width: '500',
     playerVars: {
       autoplay: 1,
-    },
+      // controls: 0,
+    }
   };
 
   return (
@@ -42,7 +43,7 @@ function App() {
         </a>
 
         <div ref={refTest}>
-          <Youtube videoId="2g811Eo7K8U" opts={opts} onReady={onReady} style={{pointerEvents:"none"}}/>
+          <Youtube videoId="2g811Eo7K8U" opts={opts} onReady={onReady} onPlay={onPlay}/>
         </div>
       </header>
     </div>
