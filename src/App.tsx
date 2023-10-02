@@ -8,21 +8,27 @@ function App() {
   const refTest = useRef<HTMLDivElement>(null);
 
   const onReady = (e: YouTubeEvent) => {
-    e.target.mute();
   };
 
+  const [isPlaying, setIsPlaying] = useState(false);
+  
+  // TODO 현재 시각에 동기화하여, 현재 시각에 일치하는 동영상을 재생위치에 맞게 틀어줘야 함
+  const currentVideoId = 'lM-G5ScFOEw';
+  
+  
+  
   const onPlay = (e: YouTubeEvent) => {
-    setTimeout(() => {
-      e.target.loadVideoById('SPjB51Sy9zY', undefined, undefined);
-    }, 5000);
+    if ( ! isPlaying) {
+      setIsPlaying(true);
+      e.target.loadVideoById(currentVideoId, 30, undefined);
+    }
   };
 
   const opts: YouTubeProps['opts'] = {
     height: '300',
     width: '500',
     playerVars: {
-      autoplay: 1,
-      // controls: 0,
+      controls: 0,
     }
   };
 
@@ -43,7 +49,7 @@ function App() {
         </a>
 
         <div ref={refTest}>
-          <Youtube videoId="2g811Eo7K8U" opts={opts} onReady={onReady} onPlay={onPlay}/>
+          <Youtube videoId="2g811Eo7K8U" opts={opts} onReady={onReady} onPlay={onPlay} onPause={(e) => e.target.playVideo()}/>
         </div>
       </header>
     </div>
