@@ -12,7 +12,7 @@ function App() {
 
   const [isPlaying, setIsPlaying] = useState(false);
   
-  // TODO 현재 시각에 동기화하여, 현재 시각에 일치하는 동영상을 재생위치에 맞게 틀어줘야 함
+  // TODO 현재 시각에 동기화하여, 현재 시각에 일치하는 동영상을 재생위치에 맞게 틀어줘야 함 (시간 문제일 뿐 구현 가능)
   const currentVideoId = 'lM-G5ScFOEw';
   
   
@@ -26,7 +26,7 @@ function App() {
 
   const opts: YouTubeProps['opts'] = {
     height: '300',
-    width: '500',
+    width: '1000',
     playerVars: {
       controls: 0,
     }
