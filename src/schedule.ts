@@ -1,8 +1,8 @@
 
-const convertUrlToId = (youtubeUrl: string) => { // string은 아마 값복사 일거임.
-    youtubeUrl.replace("https://www.youtube.com/watch?v=", '');
+export const convertUrlToId = (youtubeUrl: string) => { // string은 아마 값복사 일거임.
+    const id = youtubeUrl.replace("https://www.youtube.com/watch?v=", '');
     
-    return youtubeUrl;
+    return id;
 };
 
 const convertHmsToSecond = (hms: string) => {
@@ -17,11 +17,11 @@ const convertHmsToSecond = (hms: string) => {
 }
 
 const schedule = {
-    startTime: "18:45", // 첫영상 시작 기준 시간
+    startTime: "12:45", // 첫영상 시작 기준 시간
     videos: [
         {
             url: "https://www.youtube.com/watch?v=_7-Z2MDx7YU",
-            from: "2:30",
+            from: "2:00",
             to: "5:00",
         },
         {

@@ -2,8 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import Youtube, {YouTubeEvent, YouTubePlayer, YouTubeProps} from 'react-youtube';
-import { getCurrentTime } from './utils';
-import schedule from './schedule';
+import schedule, { convertUrlToId } from './schedule';
 function App() {
 
   const refTest = useRef<HTMLDivElement>(null);
@@ -39,43 +38,43 @@ function App() {
   // 어느 비디오의 어느 초에 있어야되는지 찾기
   const findWhereShouldIAm = () => {
     let sumSeconds = 0;
-    schedule.videos.forEach((video) => {
-      const duration = mmssToSeconds(video.to) - mmssToSeconds(video.from);
+    for (const video of schedule.videos) {
+      console.log("loop");
+      const from = mmssToSeconds(video.from);
+      const to = mmssToSeconds(video.to);
+      const duration = to - from;
       if (getElapsedSeconds() >= sumSeconds && getElapsedSeconds() <= duration) {
-        setCurrentVideoTime(getElapsedSeconds() - sumSeconds);
-        return;
+        setCurrentVideoId(convertUrlToId(video.url));
+        setCurrentVideoTime(from + getElapsedSeconds() - sumSeconds);
+        console.log(video, "in");
+        break;
       }
       sumSeconds += duration;
-    });
+    }
   }
-
-
-  // for console test
-  useEffect(() => {
-    console.log(getElapsedSeconds());
-  })
   
   useEffect(() => {
     if (isPlaying) {
-      player?.loadVideoById(currentVideoId, 30, undefined);
+      console.log("work useEffect!")
+      console.log(currentVideoId, currentVideoTime);
+      player?.loadVideoById(currentVideoId, currentVideoTime, undefined);
     }
   }, [currentVideoId]);
   
   const onPlay = (e: YouTubeEvent) => {
     if ( ! isPlaying) {
-      const player = e.target;
       setIsPlaying(true);
-      setPlayer(player);
-      player.loadVideoById(currentVideoId, 30, undefined);
+      setPlayer(e.target);
+      setTimeout(() => findWhereShouldIAm(), 1000);
+      
     }
   };
 
-  
   const opts: YouTubeProps['opts'] = {
     height: '300',
     width: '1000',
     playerVars: {
-      controls: 0,
+      // controls: 0,
     }
   };
   
