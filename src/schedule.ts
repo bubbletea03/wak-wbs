@@ -17,7 +17,7 @@ const convertHmsToSecond = (hms: string) => {
 }
 
 const schedule = {
-    startTime: "12:45", // 첫영상 시작 기준 시간
+    startTime: "12:59", // 첫영상 시작 기준 시간
     videos: [
         {
             url: "https://www.youtube.com/watch?v=_7-Z2MDx7YU",
