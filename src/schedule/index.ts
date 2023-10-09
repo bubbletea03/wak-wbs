@@ -16,6 +16,7 @@ export const getCurrentVideo = () => {
     sumSeconds += duration;
   }
 
+  console.log(id, time);
   if (!id || !time) return null;
 
   return { id, time };
@@ -33,7 +34,7 @@ const getElapsedSeconds = () => {
   return elapsedTime / 1000;
 };
 
-const mmssToSeconds = (mmss: string) => {
+export const mmssToSeconds = (mmss: string) => {
   let [m, s] = mmss.split(":").map((v) => Number(v));
   return m * 60 + s;
 };
