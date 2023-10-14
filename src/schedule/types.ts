@@ -1,20 +1,20 @@
-type Video = {
+export type Video = {
   url: string;
   from: string;
   to: string;
 };
 
-type ScheduleData = {
+export type ScheduleData = {
   startTime: string;
   videos: Video[];
 };
 
-interface RefinedSchedule extends ScheduleData {
+export interface RefinedSchedule extends ScheduleData {
   getCurrentVideo: () => RefinedVideo;
   videos: RefinedVideo[];
 }
 
-interface RefinedVideo extends Video {
+export interface RefinedVideo extends Video {
   duration: number;
   id: string;
   fromNum: number;

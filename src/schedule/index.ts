@@ -1,4 +1,5 @@
 import data from "./scheduleData.json";
+import { ScheduleData } from "./types";
 
 const scheduleData: ScheduleData = data;
 
