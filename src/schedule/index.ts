@@ -31,6 +31,8 @@ export const getSchedule = () => {
     - scheduleData 자체를 new Date()로 다 해버릴까 생각해봤는데 (애초에 저거를 뽑아낼 수 있는 웹페이지를 만드려고 했었으니까.)
        그걸로는 안 될듯 애초에 정적 데이터라. 그냥 하던대로하고 / 날짜 배열만 추가하는 식으로 해야할듯
   */
+
+  // TODO 1. RefinedSchedule에서는 걍 Date 이용하기. 2. scheduleData 날짜마다로 해서 배열로 갈아엎기.
 };
 
 const convertYoutubeUrlToId = (youtubeUrl: string) => {
