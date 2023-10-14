@@ -1,7 +1,9 @@
 import { mmssToSeconds } from "schedule";
-import scheduleData from "schedule/scheduleData";
 import styled from "styled-components";
 import { convertYoutubeUrlToId } from "utils";
+import data from "schedule/scheduleData.json";
+
+const scheduleData: ScheduleData = data;
 
 export default function ScheduleTable() {
   // TODO scheduleData 그냥 갖고오는 게 아니라 getScheduleData 이런 식으로 갖고오게 한다음 정제시키기...
