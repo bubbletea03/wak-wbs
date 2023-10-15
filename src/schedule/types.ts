@@ -4,21 +4,24 @@ export type Video = {
   to: string;
 };
 
-export type ScheduleData = {
-  startTime: string;
+export type Schedule = {
+  date: string;
+  firstStartTime: string;
   videos: Video[];
 };
 
-export interface RefinedSchedule extends ScheduleData {
-  getCurrentVideo: () => RefinedVideo;
-  videos: RefinedVideo[];
+export type ScheduleList = Schedule[];
+
+export interface DetailedSchedule extends Schedule {
+  getCurrentVideo: () => DetailedVideo | null;
+  videos: DetailedVideo[];
 }
 
-export interface RefinedVideo extends Video {
+export interface DetailedVideo extends Video {
   duration: number;
   id: string;
   fromNum: number;
   toNum: number;
-  startTime: string;
-  endTime: string;
+  startTimeDate: Date;
+  endTimeDate: Date;
 }
