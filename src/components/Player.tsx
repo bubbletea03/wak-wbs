@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import YouTube, { YouTubeEvent, YouTubePlayer, YouTubeProps } from "react-youtube";
-import { getCurrentVideo } from "schedule";
+import { getScheduleToday } from "schedule";
 
 export default function Player() {
   const [isPlaying, setIsPlaying] = useState(false);
@@ -8,6 +8,7 @@ export default function Player() {
   const [currentVideoId, setCurrentVideoId] = useState("lM-G5ScFOEw");
   const [currentVideoTime, setCurrentVideoTime] = useState(0);
   const [player, setPlayer] = useState<YouTubePlayer>();
+  const scheduleToday = getScheduleToday();
 
   const onReady = (e: YouTubeEvent) => {};
 
@@ -15,10 +16,13 @@ export default function Player() {
     if (!isPlaying) {
       setIsPlaying(true);
       setPlayer(e.target);
-      const currentVideo = getCurrentVideo();
+
+      const currentVideo = scheduleToday?.getCurrentVideo();
       if (currentVideo) {
+        const videoTime = (new Date().getTime() - currentVideo.startTimeDate.getTime()) / 1000;
+
         setCurrentVideoId(currentVideo.id);
-        setCurrentVideoTime(currentVideo.time);
+        setCurrentVideoTime(videoTime);
       } else console.log("방송 준비 시간입니다;");
     }
   };
