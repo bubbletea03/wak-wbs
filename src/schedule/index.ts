@@ -1,36 +1,84 @@
-import data from "./scheduleData.json";
-import { ScheduleData } from "./types";
+import scheduleListData from "./scheduleListData.json";
+import { DetailedSchedule, DetailedVideo, Schedule, ScheduleList } from "./types";
 
-const scheduleData: ScheduleData = data;
+const scheduleList: ScheduleList = scheduleListData;
 
-export const getSchedule = () => {
-  const videos = scheduleData.videos;
+export const getScheduleToday = () => {
+  const scheduleToday = filterTodaySchedule();
+
+  if (!scheduleToday) return null;
+
+  const videos = scheduleToday.videos;
   let sumDuration = 0;
+  const detailedVideos: DetailedVideo[] = [];
+
   for (const video of videos) {
     const fromNum = mmssToSeconds(video.from);
     const toNum = mmssToSeconds(video.to);
     const duration = toNum - fromNum;
-
-    const currentTime = new Date();
-    currentTime.setSeconds(currentTime.getSeconds() + sumDuration);
-    //ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ
-
-    // 최초 시작 시각 갖고와서 이전까지의 duration (=sumDuration)을 더하면 됨
     const id = convertYoutubeUrlToId(video.url);
+
+    const firstStartTimeDate = getFirstStartTimeDate(scheduleToday);
+
+    const startTimeDate = new Date(firstStartTimeDate);
+    startTimeDate.setSeconds(startTimeDate.getSeconds() + sumDuration);
+
+    const endTimeDate = new Date(startTimeDate);
+    endTimeDate.setSeconds(endTimeDate.getSeconds() + duration);
+
+    const detailedVideo: DetailedVideo = {
+      ...video,
+      duration,
+      fromNum,
+      toNum,
+      startTimeDate,
+      endTimeDate,
+      id,
+    };
+    detailedVideos.push(detailedVideo);
+
+    const currentDate = new Date();
+    if (currentDate >= startTimeDate && currentDate <= endTimeDate) {
+    }
 
     sumDuration += duration;
   }
 
-  /* 스케쥴 데이터 자체에 넣고싶은 것
-    - 현재 비디오는 어디인지
-    - duration
-    - url to id
-    그냥 RefinedSchedule은 코드 내에서 사용하는 거니까 굳이 string으로 놓지말까
-    생각해보니까 시간표가 하루만 있는데. 날짜별로 시간표를 설정할 수 있게 해야되겠는데?
-    
-    - scheduleData 자체를 new Date()로 다 해버릴까 생각해봤는데 (애초에 저거를 뽑아낼 수 있는 웹페이지를 만드려고 했었으니까.)
-       그걸로는 안 될듯 애초에 정적 데이터라. 그냥 하던대로하고 / 날짜 배열만 추가하는 식으로 해야할듯
-  */
+  const detailedScheduleToday: DetailedSchedule = {
+    ...scheduleToday,
+    getCurrentVideo: () => getCurrentVideo(detailedVideos),
+    videos: detailedVideos,
+  };
+
+  return detailedScheduleToday;
+};
+
+const getCurrentVideo = (videos: DetailedVideo[]) => {
+  const currentDate = new Date();
+  for (const video of videos) {
+    if (currentDate >= video.startTimeDate && currentDate <= video.endTimeDate) return video;
+  }
+
+  return null;
+};
+
+const getFirstStartTimeDate = (schedule: Schedule) => {
+  const firstStartTimeDate = new Date();
+  const [h, m] = schedule.firstStartTime.split(":").map((v) => Number(v));
+  firstStartTimeDate.setHours(h, m, 0);
+
+  return firstStartTimeDate;
+};
+
+const filterTodaySchedule = () => {
+  const today = new Date();
+  const scheduleToday = scheduleList.filter((daySchedule) => {
+    const [m, d] = daySchedule.date.split("/").map((v) => Number(v));
+
+    return m === today.getMonth() + 1 && d === today.getDate();
+  })[0];
+
+  return scheduleToday;
 };
 
 const convertYoutubeUrlToId = (youtubeUrl: string) => {
@@ -39,41 +87,7 @@ const convertYoutubeUrlToId = (youtubeUrl: string) => {
   return id;
 };
 
-// TODO getSchedule 이외에는 export 다 지우기
-export const getCurrentVideo = () => {
-  let sumSeconds = 0;
-  let id, time;
-  for (const video of scheduleData.videos) {
-    const from = mmssToSeconds(video.from);
-    const to = mmssToSeconds(video.to);
-    const duration = to - from;
-    if (getElapsedSeconds() >= sumSeconds && getElapsedSeconds() <= duration) {
-      id = convertYoutubeUrlToId(video.url);
-      time = from + getElapsedSeconds() - sumSeconds;
-      break;
-    }
-    sumSeconds += duration;
-  }
-
-  console.log(id, time);
-  if (!id || !time) return null;
-
-  return { id, time };
-};
-
-const getElapsedSeconds = () => {
-  const startTimeDate = new Date();
-  let [h, m] = scheduleData.startTime.split(":").map((v) => Number(v));
-  startTimeDate.setHours(h, m, 0);
-
-  const currentTimeDate = new Date();
-
-  const elapsedTime = currentTimeDate.getTime() - startTimeDate.getTime();
-
-  return elapsedTime / 1000;
-};
-
-export const mmssToSeconds = (mmss: string) => {
+const mmssToSeconds = (mmss: string) => {
   let [m, s] = mmss.split(":").map((v) => Number(v));
   return m * 60 + s;
 };

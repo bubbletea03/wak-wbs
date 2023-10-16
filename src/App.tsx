@@ -29,6 +29,8 @@ function App() {
           Learn React
         </a>
 
+        <div>현재 시각: {new Date().toTimeString()}</div>
+
         <Player />
         <ScheduleTable />
       </header>
