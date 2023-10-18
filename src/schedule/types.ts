@@ -2,6 +2,8 @@ export type Video = {
   url: string;
   from: string;
   to: string;
+  title?: string;
+  summaryUrl?: string;
 };
 
 export type Schedule = {
