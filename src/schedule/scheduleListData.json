@@ -24,5 +24,26 @@
         "to": "8:00"
       }
     ]
+  },
+  {
+    "date": "10/18",
+    "firstStartTime": "13:50",
+    "videos": [
+      {
+        "url": "https://www.youtube.com/watch?v=_7-Z2MDx7YU",
+        "from": "3:00",
+        "to": "7:00"
+      },
+      {
+        "url": "https://www.youtube.com/watch?v=_7-Z2MDx7YU",
+        "from": "3:00",
+        "to": "7:00"
+      },
+      {
+        "url": "https://www.youtube.com/watch?v=_7-Z2MDx7YU",
+        "from": "3:00",
+        "to": "7:00"
+      }
+    ]
   }
 ]
