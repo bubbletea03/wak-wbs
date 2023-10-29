@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import YouTube, { YouTubeEvent, YouTubePlayer, YouTubeProps } from "react-youtube";
 import { getScheduleToday } from "schedule";
+import styled from "styled-components";
 
 export default function Player() {
   const [isPlaying, setIsPlaying] = useState(false);
+  const [isCurrentVideoNotFound, setIsCurrentVideoNotFound] = useState(false);
 
   const [currentVideoId, setCurrentVideoId] = useState("lM-G5ScFOEw");
   const [currentVideoTime, setCurrentVideoTime] = useState(0);
@@ -23,13 +25,11 @@ export default function Player() {
 
         setCurrentVideoId(currentVideo.id);
         setCurrentVideoTime(videoTime);
-      } else console.log("방송 준비 시간입니다;");
+      } else setIsCurrentVideoNotFound(true);
     }
   };
 
   const opts: YouTubeProps["opts"] = {
-    height: "300",
-    width: "1000",
     playerVars: {
       // controls: 0,
     },
@@ -43,12 +43,33 @@ export default function Player() {
   }, [currentVideoId]);
 
   return (
-    <YouTube
-      videoId="2g811Eo7K8U"
-      opts={opts}
-      onReady={onReady}
-      onPlay={onPlay}
-      onPause={(e) => e.target.playVideo()}
-    />
+    <>
+      <PlayerWrapper>
+        {isCurrentVideoNotFound ? (
+          <div style={{ color: "white" }}>방송 준비 시간입니다.</div>
+        ) : (
+          <YouTube
+            videoId="2g811Eo7K8U"
+            opts={opts}
+            onReady={onReady}
+            onPlay={onPlay}
+            onPause={(e) => e.target.playVideo()}
+          />
+        )}
+      </PlayerWrapper>
+    </>
   );
 }
+
+const PlayerWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  height: 300px;
+  width: 100%;
+  background-color: black;
+
+  iframe {
+    height: 100%;
+    aspect-ratio: 16 / 9;
+  }
+`;
