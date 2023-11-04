@@ -3,7 +3,7 @@ import { DetailedSchedule, DetailedVideo, Schedule, ScheduleList } from "./types
 
 const scheduleList: ScheduleList = scheduleListData;
 
-export const getScheduleToday = () => {
+export const loadScheduleToday = () => {
   const scheduleToday = filterTodaySchedule();
 
   if (!scheduleToday) return null;

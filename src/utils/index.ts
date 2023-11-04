@@ -1,16 +1,28 @@
+import axios from "axios";
+
 export const convertYoutubeUrlToId = (youtubeUrl: string) => {
-  // string은 아마 값복사 일거임.
   const id = youtubeUrl.replace("https://www.youtube.com/watch?v=", "");
 
   return id;
 };
 
-export const getCurrentTime = () => {
-  const today = new Date();
-  const to2digit = (num: number) => String(num).padStart(2, "0");
-  const hh = to2digit(today.getHours());
-  const mm = to2digit(today.getMinutes());
-  const ss = to2digit(today.getSeconds());
+export const getYoutubeVideoTitle = async (videoId: string) => {
+  const res = await axios.get("https://www.googleapis.com/youtube/v3/videos", {
+    params: {
+      part: "snippet",
+      maxResults: 50,
+      id: videoId,
+      key: "AIzaSyApPrwEPYT0KcMmpdF1YtfzGXI8TUu-Y8w",
+    },
+  });
+
+  return res.data.items[0].snippet.title;
+};
+
+export const dateToString = (date: Date) => {
+  const hh = date.getHours().toString().padStart(2, "0");
+  const mm = date.getMinutes().toString().padStart(2, "0");
+  const ss = date.getSeconds().toString().padStart(2, "0");
 
   return {
     hms: `${hh}:${mm}:${ss}`,

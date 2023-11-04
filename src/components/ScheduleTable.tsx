@@ -1,8 +1,8 @@
-import { getScheduleToday } from "schedule";
+import { loadScheduleToday } from "schedule";
 import styled from "styled-components";
 
 export default function ScheduleTable() {
-  const scheduleToday = getScheduleToday();
+  const scheduleToday = loadScheduleToday();
 
   return (
     <>

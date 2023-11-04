@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import YouTube, { YouTubeEvent, YouTubePlayer, YouTubeProps } from "react-youtube";
-import { getScheduleToday } from "schedule";
+import { loadScheduleToday } from "schedule";
 import styled from "styled-components";
+import { getYoutubeVideoTitle } from "utils";
 
 export default function Player() {
   const [isPlaying, setIsPlaying] = useState(false);
@@ -9,12 +10,13 @@ export default function Player() {
 
   const [currentVideoId, setCurrentVideoId] = useState("lM-G5ScFOEw");
   const [currentVideoTime, setCurrentVideoTime] = useState(0);
+  const [currentVideoTitle, setCurrentVideoTitle] = useState("");
   const [player, setPlayer] = useState<YouTubePlayer>();
-  const scheduleToday = getScheduleToday();
+  const scheduleToday = loadScheduleToday();
 
   const onReady = (e: YouTubeEvent) => {};
 
-  const onPlay = (e: YouTubeEvent) => {
+  const onPlay = async (e: YouTubeEvent) => {
     if (!isPlaying) {
       setIsPlaying(true);
       setPlayer(e.target);
@@ -26,6 +28,9 @@ export default function Player() {
         setCurrentVideoId(currentVideo.id);
         setCurrentVideoTime(videoTime);
       } else setIsCurrentVideoNotFound(true);
+
+      const videoTitle = await getYoutubeVideoTitle(currentVideoId);
+      setCurrentVideoTitle(videoTitle);
     }
   };
 
@@ -57,6 +62,7 @@ export default function Player() {
           />
         )}
       </PlayerWrapper>
+      <div>{currentVideoTitle}</div>
     </>
   );
 }

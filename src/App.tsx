@@ -1,3 +1,4 @@
+import AllSchedule from "components/AllSchedule";
 import Player from "./components/Player";
 import ScheduleTable from "components/ScheduleTable";
 import { useEffect } from "react";
@@ -21,6 +22,7 @@ function App() {
 
         <Player />
         <ScheduleTable />
+        <AllSchedule />
       </header>
     </div>
   );
