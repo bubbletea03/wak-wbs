@@ -31,23 +31,26 @@
     ]
   },
   {
-    "date": "10/18",
+    "date": "11/04",
     "firstStartTime": "13:50",
     "videos": [
       {
         "url": "https://www.youtube.com/watch?v=_7-Z2MDx7YU",
         "from": "3:00",
-        "to": "7:00"
+        "to": "7:00",
+        "title": "안녕하세요"
       },
       {
         "url": "https://www.youtube.com/watch?v=_7-Z2MDx7YU",
         "from": "3:00",
-        "to": "7:00"
+        "to": "7:00",
+        "title": "타이틀테스트"
       },
       {
         "url": "https://www.youtube.com/watch?v=_7-Z2MDx7YU",
         "from": "3:00",
-        "to": "7:00"
+        "to": "7:00",
+        "title": "ㅌㅅㅌㅅㅌ"
       }
     ]
   }
