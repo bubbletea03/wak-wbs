@@ -2,6 +2,7 @@ import AllSchedule from "components/AllSchedule";
 import Player from "./components/Player";
 import ScheduleTable from "components/ScheduleTable";
 import styled from "styled-components";
+import VideoRecommends from "components/VideoRecommends";
 
 function App() {
   /* TODO 스케쥴 잘못 입력하는 경우 예외처리 (방송 준비중 화면 띄우기)
@@ -16,6 +17,7 @@ function App() {
 
         <Player />
         <ScheduleTable />
+        <VideoRecommends/>
         <AllSchedule />
       </header>
     </div>
