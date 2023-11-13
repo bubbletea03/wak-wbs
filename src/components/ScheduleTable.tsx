@@ -1,5 +1,6 @@
 import { loadScheduleToday } from "schedule";
 import styled from "styled-components";
+import { dateToString } from "utils";
 
 export default function ScheduleTable() {
   const scheduleToday = loadScheduleToday();
@@ -10,9 +11,8 @@ export default function ScheduleTable() {
         {scheduleToday?.videos.map((video, i) => (
           <VideoInfo>
             <Thumbnail src={"https://img.youtube.com/vi/" + video.id + "/mqdefault.jpg"} />
-            시작 시간:
-            {video.startTimeDate.getHours()} :{" "}
-            {video.startTimeDate.getMinutes().toString().padStart(2, "0")}
+            {dateToString(video.startTimeDate).hm} ~ {dateToString(video.endTimeDate).hm}
+            <VideoTitle>{video.title}</VideoTitle>
           </VideoInfo>
         ))}
       </Table>
@@ -22,15 +22,24 @@ export default function ScheduleTable() {
 
 const Table = styled.div`
   display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
   width: 100%;
-  justify-content: center;
-  background-color: lightgray;
+  height: 170px;
+  overflow: hidden;
+  background-color: lightgreen;
 `;
 
 const VideoInfo = styled.div`
-  background-color: gray;
-  padding: 20px;
+  display: inline-block;
+  padding-bottom: 20px;
+  color: white;
+  font-weight: bold;
   margin: 0 10px;
+`;
+
+const VideoTitle = styled.div`
+  color: black;
 `;
 
 const Thumbnail = styled.img`

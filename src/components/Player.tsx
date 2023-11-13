@@ -70,12 +70,18 @@ export default function Player() {
 const PlayerWrapper = styled.div`
   display: flex;
   justify-content: center;
-  height: 300px;
+  align-items: center;
   width: 100%;
+  height: fit-content;
   background-color: black;
+  box-sizing: border-box;
 
   iframe {
-    height: 100%;
-    aspect-ratio: 16 / 9;
+    display: block;
+    box-sizing: content-box;
+    width: 100vw;
+    height: 56.25vw; // 16:9 ratio
+    max-width: 700px;
+    max-height: 393.75px;
   }
 `;
