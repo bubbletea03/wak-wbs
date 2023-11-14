@@ -8,13 +8,13 @@ export default function VideoRecommends() {
     <>
       <Wrapper>
         <FullVideo>
-          처음부터 보려면
+          <h3>처음부터 보려면</h3>
           <img
             src={"https://img.youtube.com/vi/" + scheduleToday?.videos[0].id + "/mqdefault.jpg"}
           />
         </FullVideo>
         <SummaryVideo>
-          액기스로 보려면
+          <h3>액기스로 보려면 </h3>
           <img
             src={"https://img.youtube.com/vi/" + scheduleToday?.videos[0].id + "/mqdefault.jpg"}
           />
@@ -26,10 +26,18 @@ export default function VideoRecommends() {
 
 const FullVideo = styled.div`
   display: block;
+  h3 {
+    font-weight: 500;
+    margin: 10px 10x;
+  }
 `;
 
 const SummaryVideo = styled.div`
   display: block;
+  h3 {
+    font-weight: 500;
+    margin: 10px 10x;
+  }
 `;
 
 const Wrapper = styled.div`

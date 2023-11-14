@@ -11,8 +11,10 @@ export default function ScheduleTable() {
         {scheduleToday?.videos.map((video, i) => (
           <VideoInfo>
             <Thumbnail src={"https://img.youtube.com/vi/" + video.id + "/mqdefault.jpg"} />
-            {dateToString(video.startTimeDate).hm} ~ {dateToString(video.endTimeDate).hm}
-            <VideoTitle>{video.title}</VideoTitle>
+            <div>
+              {dateToString(video.startTimeDate).hm} ~ {dateToString(video.endTimeDate).hm}
+              <VideoTitle>{video.title}</VideoTitle>
+            </div>
           </VideoInfo>
         ))}
       </Table>
@@ -21,21 +23,27 @@ export default function ScheduleTable() {
 }
 
 const Table = styled.div`
-  display: flex;
-  justify-content: space-around;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: repeat(auto-fill, minmax(100px, 1fr));
+  justify-content: center;
   width: 100%;
-  height: 170px;
+  height: 100px;
   overflow: hidden;
   background-color: lightgreen;
 `;
 
 const VideoInfo = styled.div`
-  display: inline-block;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   padding-bottom: 20px;
+  padding-right: 2px;
+  padding-left: 2px;
   color: white;
   font-weight: bold;
-  margin: 0 10px;
+  border: 2px solid white;
+  background-color: rgba(0, 0, 0, 0.2);
 `;
 
 const VideoTitle = styled.div`
@@ -44,5 +52,7 @@ const VideoTitle = styled.div`
 
 const Thumbnail = styled.img`
   display: block;
-  width: 200px;
+  width: 100px;
+  height: auto;
+  margin-top: 10px;
 `;

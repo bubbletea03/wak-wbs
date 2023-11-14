@@ -9,7 +9,9 @@ export default function AllSchedule() {
 
   return (
     <>
-      <ModalOpenButton onClick={() => setIsModalActive(true)}>시간표</ModalOpenButton>
+      <ModalOpenButton onClick={() => setIsModalActive(true)}>
+        시<br />간<br />표
+      </ModalOpenButton>
       {isModalActive && (
         <>
           <ModalBackground onClick={() => setIsModalActive(false)} />
@@ -59,7 +61,8 @@ const ModalBackground = styled.div`
 
 const ModalOpenButton = styled.button`
   position: fixed;
-  background-color: green;
+  background-color: lightgreen;
   top: 400px;
   right: 0;
+  color: #000000;
 `;
