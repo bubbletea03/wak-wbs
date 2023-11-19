@@ -1,71 +1,73 @@
 import { useEffect, useState } from "react";
-import YouTube, { YouTubeEvent, YouTubePlayer, YouTubeProps } from "react-youtube";
+import YouTube, { YouTubeEvent, YouTubePlayer } from "react-youtube";
 import { loadScheduleToday } from "schedule";
 import styled from "styled-components";
 import { getYoutubeVideoTitle } from "utils";
 
 export default function Player() {
   const [isPlaying, setIsPlaying] = useState(false);
-  const [isCurrentVideoNotFound, setIsCurrentVideoNotFound] = useState(false);
 
-  const [currentVideoId, setCurrentVideoId] = useState("lM-G5ScFOEw");
-  const [currentVideoTime, setCurrentVideoTime] = useState(0);
-  const [currentVideoTitle, setCurrentVideoTitle] = useState("");
+  const [currentVideoState, setCurrentVideoState] = useState({ id: "", time: 0, title: "" });
   const [player, setPlayer] = useState<YouTubePlayer>();
   const scheduleToday = loadScheduleToday();
 
   const onReady = (e: YouTubeEvent) => {};
 
-  const onPlay = async (e: YouTubeEvent) => {
+  const onPlay = (e: YouTubeEvent) => {
     if (!isPlaying) {
       setIsPlaying(true);
       setPlayer(e.target);
-
-      const currentVideo = scheduleToday?.getCurrentVideo();
-      if (currentVideo) {
-        const videoTime = (new Date().getTime() - currentVideo.startTimeDate.getTime()) / 1000;
-
-        setCurrentVideoId(currentVideo.id);
-        setCurrentVideoTime(videoTime);
-      } else setIsCurrentVideoNotFound(true);
-
-      const videoTitle = await getYoutubeVideoTitle(currentVideoId);
-      setCurrentVideoTitle(videoTitle);
+      updateCurrentVideo();
     }
   };
 
-  const opts: YouTubeProps["opts"] = {
-    playerVars: {
-      // controls: 0,
-    },
+  const updateCurrentVideo = async () => {
+    console.log("작동함!");
+    const currentVideo = scheduleToday?.getCurrentVideo();
+    if (currentVideo) {
+      const time = (new Date().getTime() - currentVideo.startTimeDate.getTime()) / 1000;
+      setCurrentVideoState((prev) => ({ ...prev, id: currentVideo.id, time }));
+      const title = await getYoutubeVideoTitle(currentVideo.id);
+      setCurrentVideoState((prev) => ({ ...prev, title }));
+    }
   };
 
   useEffect(() => {
+    updateCurrentVideo();
+  }, []);
+
+  useEffect(() => {
     if (isPlaying) {
-      console.log(currentVideoId, currentVideoTime);
-      player?.loadVideoById(currentVideoId, currentVideoTime, undefined);
+      player?.loadVideoById(currentVideoState.id, currentVideoState.time, undefined);
     }
-  }, [currentVideoId]);
+  }, [currentVideoState]);
 
   return (
     <>
       <PlayerWrapper>
-        {isCurrentVideoNotFound ? (
-          <div style={{ color: "white" }}>방송 준비 시간입니다.</div>
+        {currentVideoState.id == "" || undefined ? (
+          <div>
+            <img src="icons/no_video.png" />
+            <NoVideoText style={{ color: "white" }}>방송 준비 시간입니다.</NoVideoText>
+          </div>
         ) : (
           <YouTube
-            videoId="2g811Eo7K8U"
-            opts={opts}
+            videoId={currentVideoState.id}
             onReady={onReady}
             onPlay={onPlay}
             onPause={(e) => e.target.playVideo()}
           />
         )}
       </PlayerWrapper>
-      <div>{currentVideoTitle}</div>
+      <div>{currentVideoState.title}</div>
     </>
   );
 }
+
+const NoVideoText = styled.div`
+  text-align: center;
+  color: white;
+`;
 
 const PlayerWrapper = styled.div`
   display: flex;
