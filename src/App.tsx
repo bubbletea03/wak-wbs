@@ -22,7 +22,7 @@ function App() {
         <Player />
         <ScheduleTable />
         <VideoRecommends />
-        <AllSchedule />
+        {/* <AllSchedule /> */}
       </header>
     </div>
   );

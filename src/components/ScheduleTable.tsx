@@ -5,22 +5,44 @@ import { dateToString } from "utils";
 export default function ScheduleTable() {
   const scheduleToday = loadScheduleToday();
 
+  // 스택 사용하여 좌우 이동 구현
+
   return (
     <>
       <Table>
-        {scheduleToday?.videos.map((video, i) => (
-          <VideoInfo>
-            <Thumbnail src={"https://img.youtube.com/vi/" + video.id + "/mqdefault.jpg"} />
-            <div>
-              {dateToString(video.startTimeDate).hm} ~ {dateToString(video.endTimeDate).hm}
-              <VideoTitle>{video.title}</VideoTitle>
-            </div>
-          </VideoInfo>
-        ))}
+        {scheduleToday?.videos.map((video, i) => {
+          const currentVideo = scheduleToday?.getCurrentVideo();
+          let isCurrentVideo = false;
+
+          if (video === currentVideo) isCurrentVideo = true;
+
+          return (
+            <VideoInfo isCurrentVideo={isCurrentVideo}>
+              <Thumbnail src={"https://img.youtube.com/vi/" + video.id + "/mqdefault.jpg"} />
+              <div>
+                {dateToString(video.startTimeDate).hm} ~ {dateToString(video.endTimeDate).hm}
+                <VideoTitle>{video.title}</VideoTitle>
+              </div>
+            </VideoInfo>
+          );
+        })}
       </Table>
+      <AllScheduleButton>전체 시간표 보기</AllScheduleButton>
     </>
   );
 }
+
+const AllScheduleButton = styled.button`
+  display: block;
+  background-color: lightgreen;
+  width: 50%;
+  height: fit-content;
+  font-size: 1rem;
+  margin: 0 auto;
+  border: none;
+  color: white;
+  font-weight: bold;
+`;
 
 const Table = styled.div`
   display: grid;
@@ -33,7 +55,7 @@ const Table = styled.div`
   background-color: lightgreen;
 `;
 
-const VideoInfo = styled.div`
+const VideoInfo = styled.div<{ isCurrentVideo: boolean }>`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -43,7 +65,8 @@ const VideoInfo = styled.div`
   color: white;
   font-weight: bold;
   border: 2px solid white;
-  background-color: rgba(0, 0, 0, 0.2);
+  background-color: ${(props) =>
+    props.isCurrentVideo ? "rgba(0, 0, 0, 0.4)" : "rgba(0, 0, 0, 0.2)"};
 `;
 
 const VideoTitle = styled.div`
