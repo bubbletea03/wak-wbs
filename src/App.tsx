@@ -35,6 +35,7 @@ function App() {
 
         {/* <AllSchedule /> */}
       </header>
+      <Footer>Icons by Icons8</Footer>
     </div>
   );
 }
@@ -57,4 +58,13 @@ const DarkmodeButton = styled.button`
   background-color: transparent;
   border: 1px solid rgba(0, 0, 0, 0.7);
   border-radius: 30px;
+`;
+
+const Footer = styled.footer`
+  position: absolute;
+  bottom: 5px;
+  width: 100%;
+  text-align: center;
+  font-size: 7px;
+  color: gray;
 `;

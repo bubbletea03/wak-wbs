@@ -10,6 +10,8 @@ export default function ScheduleTable() {
   return (
     <>
       <Table>
+        <ArrowIcon src="icons/green_rightarrow.png" isLeftArrow />
+        <ArrowIcon src="icons/green_rightarrow.png" />
         {scheduleToday?.videos.map((video, i) => {
           const currentVideo = scheduleToday?.getCurrentVideo();
           let isCurrentVideo = false;
@@ -32,6 +34,17 @@ export default function ScheduleTable() {
   );
 }
 
+const ArrowIcon = styled.img<{ isLeftArrow?: boolean }>`
+  position: absolute;
+  opacity: 0.8;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  ${(props) => props.isLeftArrow && `transform: translateY(-50%) scaleX(-1); left: 0;`}
+  width: 50px;
+  height: auto;
+`;
+
 const AllScheduleButton = styled.button`
   display: block;
   background-color: lightgreen;
@@ -45,18 +58,17 @@ const AllScheduleButton = styled.button`
 `;
 
 const Table = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-template-rows: repeat(auto-fill, minmax(100px, 1fr));
-  justify-content: center;
+  position: relative;
+  display: flex;
+  justify-content: space-between;
   width: 100%;
   height: 100px;
-  overflow: hidden;
   background-color: lightgreen;
 `;
 
 const VideoInfo = styled.div<{ isCurrentVideo: boolean }>`
   display: flex;
+  width: 100%;
   justify-content: center;
   align-items: center;
   padding-bottom: 20px;
