@@ -1,33 +1,55 @@
+import { useState } from "react";
 import { loadScheduleToday } from "schedule";
 import styled from "styled-components";
 import { dateToString } from "utils";
 
 export default function ScheduleTable() {
+  const ITEM_COUNT_EACH_TABLE = 3;
+
   const scheduleToday = loadScheduleToday();
+  const [tableShiftCount, setTableShiftCount] = useState(0);
+
+  // 3개 고정으로 해놓고
 
   // 스택 사용하여 좌우 이동 구현
+
+  if (!scheduleToday) return;
 
   return (
     <>
       <Table>
-        <ArrowIcon src="icons/green_rightarrow.png" isLeftArrow />
-        <ArrowIcon src="icons/green_rightarrow.png" />
-        {scheduleToday?.videos.map((video, i) => {
-          const currentVideo = scheduleToday?.getCurrentVideo();
-          let isCurrentVideo = false;
+        {tableShiftCount > 0 && (
+          <ArrowIcon
+            onClick={() => setTableShiftCount((prev) => prev - 1)}
+            src="icons/green_rightarrow.png"
+            isLeftArrow
+          />
+        )}
+        {tableShiftCount + ITEM_COUNT_EACH_TABLE < scheduleToday.videos.length && (
+          <ArrowIcon
+            onClick={() => setTableShiftCount((prev) => prev + 1)}
+            src="icons/green_rightarrow.png"
+          />
+        )}
 
-          if (video === currentVideo) isCurrentVideo = true;
+        {scheduleToday.videos
+          .slice(tableShiftCount, tableShiftCount + ITEM_COUNT_EACH_TABLE)
+          .map((video, i) => {
+            const currentVideo = scheduleToday.getCurrentVideo();
+            let isCurrentVideo = false;
 
-          return (
-            <VideoInfo isCurrentVideo={isCurrentVideo}>
-              <Thumbnail src={"https://img.youtube.com/vi/" + video.id + "/mqdefault.jpg"} />
-              <div>
-                {dateToString(video.startTimeDate).hm} ~ {dateToString(video.endTimeDate).hm}
-                <VideoTitle>{video.title}</VideoTitle>
-              </div>
-            </VideoInfo>
-          );
-        })}
+            if (video === currentVideo) isCurrentVideo = true;
+
+            return (
+              <VideoInfo isCurrentVideo={isCurrentVideo}>
+                <Thumbnail src={"https://img.youtube.com/vi/" + video.id + "/mqdefault.jpg"} />
+                <div>
+                  {dateToString(video.startTimeDate).hm} ~ {dateToString(video.endTimeDate).hm}
+                  <VideoTitle>{video.title}</VideoTitle>
+                </div>
+              </VideoInfo>
+            );
+          })}
       </Table>
       <AllScheduleButton>전체 시간표 보기</AllScheduleButton>
     </>
