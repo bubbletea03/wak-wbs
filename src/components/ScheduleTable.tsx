@@ -13,7 +13,7 @@ export default function ScheduleTable() {
 
   // 스택 사용하여 좌우 이동 구현
 
-  if (!scheduleToday) return;
+  if (!scheduleToday) return <></>;
 
   return (
     <>
