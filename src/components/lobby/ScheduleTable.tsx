@@ -1,9 +1,11 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { loadScheduleToday } from "schedule";
 import styled from "styled-components";
 import { dateToString } from "utils";
 
 export default function ScheduleTable() {
+  const navigate = useNavigate();
   const ITEM_COUNT_EACH_TABLE = 3;
 
   const scheduleToday = loadScheduleToday();
@@ -51,7 +53,7 @@ export default function ScheduleTable() {
             );
           })}
       </Table>
-      <AllScheduleButton>전체 시간표 보기</AllScheduleButton>
+      <AllScheduleButton onClick={() => navigate("/schedule")}>전체 시간표 보기</AllScheduleButton>
     </>
   );
 }
