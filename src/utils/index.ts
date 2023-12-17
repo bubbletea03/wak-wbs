@@ -29,3 +29,7 @@ export const dateToString = (date: Date) => {
     hm: `${hh}:${mm}`,
   };
 };
+
+export const getYoutubeThumbnailSrc = (id: string) => {
+  return "https://img.youtube.com/vi/" + id + "/mqdefault.jpg";
+};
