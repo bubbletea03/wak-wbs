@@ -59,7 +59,7 @@ export default function Player() {
           />
         )}
       </PlayerWrapper>
-      <div>{currentVideoState.title}</div>
+      <VideoTitle>{currentVideoState.title}</VideoTitle>
     </>
   );
 }
@@ -67,6 +67,10 @@ export default function Player() {
 const NoVideoText = styled.div`
   text-align: center;
   color: white;
+`;
+
+const VideoTitle = styled.div`
+  margin: 5px 30px;
 `;
 
 const PlayerWrapper = styled.div`
