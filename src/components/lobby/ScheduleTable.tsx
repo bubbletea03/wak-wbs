@@ -11,9 +11,6 @@ export default function ScheduleTable() {
   const scheduleToday = loadScheduleToday();
   const [tableShiftCount, setTableShiftCount] = useState(0);
 
-  // 3개 고정으로 해놓고
-
-  // 스택 사용하여 좌우 이동 구현
 
   if (!scheduleToday) return <></>;
 
@@ -67,6 +64,7 @@ const ArrowIcon = styled.img<{ isLeftArrow?: boolean }>`
   ${(props) => props.isLeftArrow && `transform: translateY(-50%) scaleX(-1); left: 0;`}
   width: 50px;
   height: auto;
+  cursor: pointer;
 `;
 
 const AllScheduleButton = styled.button`

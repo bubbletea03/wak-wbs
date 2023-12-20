@@ -18,7 +18,10 @@ export default function SchedulePage() {
             {dateToString(video.startTimeDate).hm} <br />↓<br />
             {dateToString(video.endTimeDate).hm}
           </InfoBox>
-          <Thumbnail src={getYoutubeThumbnailSrc(video.id)}></Thumbnail>
+          <Thumbnail>
+            <img src={getYoutubeThumbnailSrc(video.id)} />
+            <Tail />
+          </Thumbnail>
           <InfoBox>{video.title}</InfoBox>
         </Wrapper>
       ))}
@@ -33,6 +36,7 @@ const InfoBox = styled.div`
   background-color: #65554b;
   color: white;
   text-align: center;
+  border-radius: 10px;
 `;
 
 const Wrapper = styled.div`
@@ -44,8 +48,21 @@ const Wrapper = styled.div`
   width: 90%;
   height: 100px;
 `;
-const Thumbnail = styled.img`
-  display: block;
+
+const Thumbnail = styled.div`
+  display: flex;
+
+  img {
+    background-color: #2a1305;
+    padding: 5px;
+    height: 90px;
+  }
+`;
+
+const Tail = styled.div`
+  background-color: #2a1305;
+  margin-left: 3px;
+  width: 5px;
   height: 100px;
 `;
 
@@ -65,5 +82,6 @@ const TodayTitle = styled.h2`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  font-size: 4rem;
   color: white;
 `;
