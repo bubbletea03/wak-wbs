@@ -14,6 +14,11 @@ button {
     border: 0;
     background-color: transparent;
 }
+
+img {
+  opacity: 0.05;
+  border: 1px solid green;
+}
 `;
 
 export default GlobalStyle;

@@ -7,6 +7,7 @@ import { getYoutubeVideoTitle } from "utils";
 export default function Player() {
   const [isPlaying, setIsPlaying] = useState(false);
 
+  const [prevVideoId, setPrevVideoId] = useState("");
   const [currentVideoState, setCurrentVideoState] = useState({ id: "", time: 0, title: "" });
   const [player, setPlayer] = useState<YouTubePlayer>();
   const scheduleToday = loadScheduleToday();
@@ -22,7 +23,6 @@ export default function Player() {
   };
 
   const updateCurrentVideo = async () => {
-    console.log("작동함!");
     const currentVideo = scheduleToday?.getCurrentVideo();
     if (currentVideo) {
       const time = (new Date().getTime() - currentVideo.startTimeDate.getTime()) / 1000;
@@ -34,11 +34,15 @@ export default function Player() {
 
   useEffect(() => {
     updateCurrentVideo();
+    let interval = setInterval(updateCurrentVideo, 1000);
+
+    return () => clearInterval(interval);
   }, []);
 
   useEffect(() => {
-    if (isPlaying) {
+    if (isPlaying && currentVideoState.id != prevVideoId) {
       player?.loadVideoById(currentVideoState.id, currentVideoState.time, undefined);
+      setPrevVideoId(currentVideoState.id);
     }
   }, [currentVideoState]);
 

@@ -1,13 +1,13 @@
 [
   {
-    "date": "12/20",
-    "firstStartTime": "23:35",
+    "date": "1/2",
+    "firstStartTime": "23:53",
     "videos": [
       {
         "title": "편성표 제목1",
         "url": "https://www.youtube.com/watch?v=_7-Z2MDx7YU",
         "from": "2:00",
-        "to": "5:00",
+        "to": "3:00",
         "summaryUrl": "https://www.youtube.com/watch?v=_7-Z2MDx7YU"
       },
       {
