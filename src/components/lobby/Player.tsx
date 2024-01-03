@@ -25,7 +25,8 @@ export default function Player() {
   const updateCurrentVideo = async () => {
     const currentVideo = scheduleToday?.getCurrentVideo();
     if (currentVideo) {
-      const time = (new Date().getTime() - currentVideo.startTimeDate.getTime()) / 1000;
+      const time =
+        currentVideo.fromNum + (new Date().getTime() - currentVideo.startTimeDate.getTime()) / 1000;
       setCurrentVideoState((prev) => ({ ...prev, id: currentVideo.id, time }));
       const title = await getYoutubeVideoTitle(currentVideo.id);
       setCurrentVideoState((prev) => ({ ...prev, title }));
