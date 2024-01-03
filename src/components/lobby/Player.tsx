@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import YouTube, { YouTubeEvent, YouTubePlayer } from "react-youtube";
+import YouTube, { YouTubeEvent, YouTubePlayer, YouTubeProps } from "react-youtube";
 import { loadScheduleToday } from "schedule";
 import styled from "styled-components";
 import { getYoutubeVideoTitle } from "utils";
@@ -22,6 +22,13 @@ export default function Player() {
     }
   };
 
+  const opts: YouTubeProps["opts"] = {
+    playerVars: {
+      rel: 0,
+      autoplay: 1,
+    },
+  };
+
   const updateCurrentVideo = async () => {
     const currentVideo = scheduleToday?.getCurrentVideo();
     if (currentVideo) {
@@ -34,6 +41,7 @@ export default function Player() {
   };
 
   useEffect(() => {
+    console.log(player?.getVolume());
     updateCurrentVideo();
     let interval = setInterval(updateCurrentVideo, 1000);
 
@@ -58,6 +66,7 @@ export default function Player() {
         ) : (
           <YouTube
             videoId={currentVideoState.id}
+            opts={opts}
             onReady={onReady}
             onPlay={onPlay}
             onPause={(e) => e.target.playVideo()}
@@ -65,6 +74,7 @@ export default function Player() {
         )}
       </PlayerWrapper>
       <VideoTitle>{currentVideoState.title}</VideoTitle>
+      <button onClick={() => player?.setVolume(100)}>테스트 버튼</button>
     </>
   );
 }
