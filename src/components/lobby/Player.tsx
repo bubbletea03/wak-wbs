@@ -27,7 +27,7 @@ export default function Player() {
   const opts: YouTubeProps["opts"] = {
     playerVars: {
       rel: 0,
-      autoplay: 1,
+      controls: 0,
     },
   };
 
@@ -35,17 +35,16 @@ export default function Player() {
     const currentVideo = scheduleToday?.getCurrentVideo();
     if (currentVideo) {
       if (firstVideoId == DEFAULT_VIDEO_ID) setFirstVideoId(currentVideo.id);
+      const id = currentVideo.id;
       const time =
         currentVideo.fromNum +
         Math.floor((new Date().getTime() - currentVideo.startTimeDate.getTime()) / 1000);
-      setCurrentVideoState((prev) => ({ ...prev, id: currentVideo.id, time }));
       const title = await getYoutubeVideoTitle(currentVideo.id);
-      setCurrentVideoState((prev) => ({ ...prev, title }));
+      setCurrentVideoState((prev) => ({ ...prev, id, time, title }));
     }
   };
 
   useEffect(() => {
-    console.log(player?.getVolume());
     updateCurrentVideo();
     let interval = setInterval(updateCurrentVideo, 1000);
 
