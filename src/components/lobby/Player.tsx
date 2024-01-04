@@ -7,8 +7,10 @@ import { getYoutubeVideoTitle } from "utils";
 export default function Player() {
   const [isPlaying, setIsPlaying] = useState(false);
 
+  const DEFAULT_VIDEO_ID = "2g811Eo7K8U";
   const [prevVideoId, setPrevVideoId] = useState("");
   const [currentVideoState, setCurrentVideoState] = useState({ id: "", time: 0, title: "" });
+  const [firstVideoId, setFirstVideoId] = useState(DEFAULT_VIDEO_ID);
   const [player, setPlayer] = useState<YouTubePlayer>();
   const scheduleToday = loadScheduleToday();
 
@@ -32,8 +34,10 @@ export default function Player() {
   const updateCurrentVideo = async () => {
     const currentVideo = scheduleToday?.getCurrentVideo();
     if (currentVideo) {
+      if (firstVideoId == DEFAULT_VIDEO_ID) setFirstVideoId(currentVideo.id);
       const time =
-        currentVideo.fromNum + (new Date().getTime() - currentVideo.startTimeDate.getTime()) / 1000;
+        currentVideo.fromNum +
+        Math.floor((new Date().getTime() - currentVideo.startTimeDate.getTime()) / 1000);
       setCurrentVideoState((prev) => ({ ...prev, id: currentVideo.id, time }));
       const title = await getYoutubeVideoTitle(currentVideo.id);
       setCurrentVideoState((prev) => ({ ...prev, title }));
@@ -50,6 +54,7 @@ export default function Player() {
 
   useEffect(() => {
     if (isPlaying && currentVideoState.id != prevVideoId) {
+      console.log(currentVideoState);
       player?.loadVideoById(currentVideoState.id, currentVideoState.time, undefined);
       setPrevVideoId(currentVideoState.id);
     }
@@ -65,7 +70,7 @@ export default function Player() {
           </div>
         ) : (
           <YouTube
-            videoId={currentVideoState.id}
+            videoId={firstVideoId}
             opts={opts}
             onReady={onReady}
             onPlay={onPlay}
