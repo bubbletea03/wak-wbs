@@ -1,3 +1,4 @@
+import useInterval from "hooks/useInterval";
 import { useEffect, useState } from "react";
 import YouTube, { YouTubeEvent, YouTubePlayer, YouTubeProps } from "react-youtube";
 import { loadScheduleToday } from "schedule";
@@ -7,10 +8,9 @@ import { getYoutubeVideoTitle } from "utils";
 export default function Player() {
   const [isPlaying, setIsPlaying] = useState(false);
 
-  const DEFAULT_VIDEO_ID = "2g811Eo7K8U";
   const [prevVideoId, setPrevVideoId] = useState("");
   const [currentVideoState, setCurrentVideoState] = useState({ id: "", time: 0, title: "" });
-  const [firstVideoId, setFirstVideoId] = useState(DEFAULT_VIDEO_ID);
+  const [firstVideoId, setFirstVideoId] = useState("");
   const [player, setPlayer] = useState<YouTubePlayer>();
   const scheduleToday = loadScheduleToday();
 
@@ -34,7 +34,7 @@ export default function Player() {
   const updateCurrentVideo = async () => {
     const currentVideo = scheduleToday?.getCurrentVideo();
     if (currentVideo) {
-      if (firstVideoId == DEFAULT_VIDEO_ID) setFirstVideoId(currentVideo.id);
+      if (!firstVideoId) setFirstVideoId(currentVideo.id);
       const id = currentVideo.id;
       const time =
         currentVideo.fromNum +
@@ -44,16 +44,14 @@ export default function Player() {
     }
   };
 
+  useInterval(updateCurrentVideo, 1000);
   useEffect(() => {
     updateCurrentVideo();
-    let interval = setInterval(updateCurrentVideo, 1000);
-
-    return () => clearInterval(interval);
   }, []);
 
   useEffect(() => {
     if (isPlaying && currentVideoState.id != prevVideoId) {
-      console.log(currentVideoState);
+      console.log(player?.loadVideoById);
       player?.loadVideoById(currentVideoState.id, currentVideoState.time, undefined);
       setPrevVideoId(currentVideoState.id);
     }
