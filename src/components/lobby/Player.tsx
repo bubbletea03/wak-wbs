@@ -33,7 +33,7 @@ export default function Player() {
 
   const updateCurrentVideo = async () => {
     const currentVideo = scheduleToday?.getCurrentVideo();
-    if (currentVideo) {
+    if (currentVideo && currentVideo.id != currentVideoState.id) {
       if (!firstVideoId) setFirstVideoId(currentVideo.id);
       const id = currentVideo.id;
       const time =
@@ -50,7 +50,7 @@ export default function Player() {
   }, []);
 
   useEffect(() => {
-    if (isPlaying && currentVideoState.id != prevVideoId) {
+    if (isPlaying) {
       console.log(player?.loadVideoById);
       player?.loadVideoById(currentVideoState.id, currentVideoState.time, undefined);
       setPrevVideoId(currentVideoState.id);
