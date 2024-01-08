@@ -1,3 +1,4 @@
+import useInterval from "hooks/useInterval";
 import { useEffect, useState } from "react";
 import YouTube, { YouTubeEvent, YouTubePlayer, YouTubeProps } from "react-youtube";
 import { loadScheduleToday } from "schedule";
@@ -9,6 +10,7 @@ export default function Player() {
 
   const [prevVideoId, setPrevVideoId] = useState("");
   const [currentVideoState, setCurrentVideoState] = useState({ id: "", time: 0, title: "" });
+  const [firstVideoId, setFirstVideoId] = useState("");
   const [player, setPlayer] = useState<YouTubePlayer>();
   const scheduleToday = loadScheduleToday();
 
@@ -25,31 +27,31 @@ export default function Player() {
   const opts: YouTubeProps["opts"] = {
     playerVars: {
       rel: 0,
-      autoplay: 1,
+      controls: 0,
     },
   };
 
   const updateCurrentVideo = async () => {
     const currentVideo = scheduleToday?.getCurrentVideo();
-    if (currentVideo) {
+    if (currentVideo && currentVideo.id != currentVideoState.id) {
+      if (!firstVideoId) setFirstVideoId(currentVideo.id);
+      const id = currentVideo.id;
       const time =
-        currentVideo.fromNum + (new Date().getTime() - currentVideo.startTimeDate.getTime()) / 1000;
-      setCurrentVideoState((prev) => ({ ...prev, id: currentVideo.id, time }));
+        currentVideo.fromNum +
+        Math.floor((new Date().getTime() - currentVideo.startTimeDate.getTime()) / 1000);
       const title = await getYoutubeVideoTitle(currentVideo.id);
-      setCurrentVideoState((prev) => ({ ...prev, title }));
+      setCurrentVideoState((prev) => ({ ...prev, id, time, title }));
     }
   };
 
+  useInterval(updateCurrentVideo, 1000);
   useEffect(() => {
-    console.log(player?.getVolume());
     updateCurrentVideo();
-    let interval = setInterval(updateCurrentVideo, 1000);
-
-    return () => clearInterval(interval);
   }, []);
 
   useEffect(() => {
-    if (isPlaying && currentVideoState.id != prevVideoId) {
+    if (isPlaying) {
+      console.log(player?.loadVideoById);
       player?.loadVideoById(currentVideoState.id, currentVideoState.time, undefined);
       setPrevVideoId(currentVideoState.id);
     }
@@ -65,7 +67,7 @@ export default function Player() {
           </div>
         ) : (
           <YouTube
-            videoId={currentVideoState.id}
+            videoId={firstVideoId}
             opts={opts}
             onReady={onReady}
             onPlay={onPlay}
