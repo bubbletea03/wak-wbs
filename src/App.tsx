@@ -24,8 +24,6 @@ export default function App() {
 }
 
 const Footer = styled.footer`
-  position: absolute;
-  bottom: 5px;
   width: 100%;
   text-align: center;
   font-size: 7px;

@@ -16,8 +16,7 @@ button {
 }
 
 img {
-  opacity: 0.05;
-  border: 1px solid green;
+  opacity: 1;
 }
 `;
 

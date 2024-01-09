@@ -11,8 +11,7 @@ export default function LobbyPage() {
     <>
       <Logo src="icons/wbs_logo.png" />
       <DarkmodeButton>
-        <img src="icons/moon.png" width={20} />
-        다크 모드로 변경
+        <img src={"icons/darkmode-btn/dark" + Math.floor(Math.random() * 6 + 1) + ".jpg"} />
       </DarkmodeButton>
 
       <Player />
@@ -40,13 +39,14 @@ const Logo = styled.img`
 `;
 
 const DarkmodeButton = styled.button`
-  display: flex;
-  align-items: center;
+  width: 70px;
   position: absolute;
   right: 20px;
   top: 30px;
-  padding: 5px;
   background-color: transparent;
-  border: 1px solid rgba(0, 0, 0, 0.7);
-  border-radius: 30px;
+
+  img {
+    width: 100%;
+    border-radius: 50%;
+  }
 `;

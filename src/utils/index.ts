@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const convertYoutubeUrlToId = (youtubeUrl: string) => {
+export const youtubeUrlToId = (youtubeUrl: string) => {
   const id = youtubeUrl.replace("https://www.youtube.com/watch?v=", "");
 
   return id;
