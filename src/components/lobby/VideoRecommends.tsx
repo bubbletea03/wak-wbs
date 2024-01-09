@@ -3,25 +3,28 @@ import styled from "styled-components";
 
 export default function VideoRecommends() {
   const scheduleToday = loadScheduleToday();
+  const currentVideo = scheduleToday?.getCurrentVideo();
 
-  return (
-    <>
-      <Wrapper>
-        <FullVideo>
-          <h3>처음부터 보려면</h3>
-          <img
-            src={"https://img.youtube.com/vi/" + scheduleToday?.videos[0].id + "/mqdefault.jpg"}
-          />
-        </FullVideo>
-        <SummaryVideo>
-          <h3>액기스로 보려면 </h3>
-          <img
-            src={"https://img.youtube.com/vi/" + scheduleToday?.videos[0].id + "/mqdefault.jpg"}
-          />
-        </SummaryVideo>
-      </Wrapper>
-    </>
-  );
+  if (currentVideo) {
+    return (
+      <>
+        <Wrapper>
+          <FullVideo>
+            <h3>처음부터 보려면</h3>
+            <img src={"https://img.youtube.com/vi/" + currentVideo.url + "/mqdefault.jpg"} />
+          </FullVideo>
+          {currentVideo.summaryUrl && (
+            <SummaryVideo>
+              <h3>액기스로 보려면 </h3>
+              <img
+                src={"https://img.youtube.com/vi/" + currentVideo.summaryUrl + "/mqdefault.jpg"}
+              />
+            </SummaryVideo>
+          )}
+        </Wrapper>
+      </>
+    );
+  }
 }
 
 const FullVideo = styled.div`
