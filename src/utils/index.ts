@@ -30,6 +30,6 @@ export const dateToString = (date: Date) => {
   };
 };
 
-export const getYoutubeThumbnailSrc = (id: string) => {
+export const getYtThumbnailSrc = (id: string) => {
   return "https://img.youtube.com/vi/" + id + "/mqdefault.jpg";
 };

@@ -2,7 +2,7 @@ import { loadScheduleToday } from "schedule";
 import styled from "styled-components";
 import { youtubeUrlToId } from "utils";
 
-export default function VideoRecommends() {
+export default function OriginalVideos() {
   const scheduleToday = loadScheduleToday();
   const currentVideo = scheduleToday?.getCurrentVideo();
 

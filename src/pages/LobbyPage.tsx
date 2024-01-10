@@ -1,10 +1,11 @@
 import { darkmodeState } from "atoms";
 import Player from "components/lobby/Player";
 import ScheduleTable from "components/lobby/ScheduleTable";
-import VideoRecommends from "components/lobby/VideoRecommends";
+import OriginalVideos from "components/lobby/OriginalVideos";
 import { useSetRecoilState } from "recoil";
 import { loadScheduleToday } from "schedule";
 import styled from "styled-components";
+import RecommendVideos from "components/lobby/RecommendVideos";
 
 export default function LobbyPage() {
   const scheduleToday = loadScheduleToday();
@@ -27,11 +28,12 @@ export default function LobbyPage() {
       {scheduleToday ? (
         <>
           <ScheduleTable />
-          <VideoRecommends />
+          <OriginalVideos />
         </>
       ) : (
         <>
           <div>오늘 방송 일정이 없습니다! 추천영상s:....</div>
+          <RecommendVideos/>
         </>
       )}
 
@@ -59,5 +61,10 @@ const DarkmodeButton = styled.button`
   img {
     width: 100%;
     border-radius: 50%;
+  }
+
+  :hover {
+    opacity: 0.7;
+    transition: opacity 0.3s;
   }
 `;

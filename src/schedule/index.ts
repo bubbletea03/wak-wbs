@@ -1,9 +1,7 @@
 import scheduleListData from "./scheduleListData.json";
 import { DetailedSchedule, DetailedVideo, Schedule, ScheduleList } from "./types";
 
-const scheduleList: ScheduleList = scheduleListData;
-
-
+export const allScheduleList: ScheduleList = scheduleListData;
 
 export const loadScheduleToday = () => {
   const scheduleToday = filterTodaySchedule();
@@ -74,7 +72,7 @@ const getFirstStartTimeDate = (schedule: Schedule) => {
 
 const filterTodaySchedule = () => {
   const today = new Date();
-  const scheduleToday = scheduleList.filter((daySchedule) => {
+  const scheduleToday = allScheduleList.filter((daySchedule) => {
     const [m, d] = daySchedule.date.split("/").map((v) => Number(v));
 
     return m === today.getMonth() + 1 && d === today.getDate();

@@ -1,6 +1,6 @@
 import { loadScheduleToday } from "schedule";
 import styled from "styled-components";
-import { dateToString, getYoutubeThumbnailSrc } from "utils";
+import { dateToString, getYtThumbnailSrc } from "utils";
 
 export default function SchedulePage() {
   const scheduleToday = loadScheduleToday();
@@ -19,7 +19,7 @@ export default function SchedulePage() {
             {dateToString(video.endTimeDate).hm}
           </InfoBox>
           <Thumbnail>
-            <img src={getYoutubeThumbnailSrc(video.id)} />
+            <img src={getYtThumbnailSrc(video.id)} />
             <Tail />
           </Thumbnail>
           <InfoBox>{video.title}</InfoBox>

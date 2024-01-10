@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { loadScheduleToday } from "schedule";
 import styled from "styled-components";
-import { dateToString, getYoutubeThumbnailSrc } from "utils";
+import { dateToString, getYtThumbnailSrc } from "utils";
 
 export default function ScheduleTable() {
   const navigate = useNavigate();
@@ -10,7 +10,6 @@ export default function ScheduleTable() {
 
   const scheduleToday = loadScheduleToday();
   const [tableShiftCount, setTableShiftCount] = useState(0);
-
 
   if (!scheduleToday) return <></>;
 
@@ -41,7 +40,7 @@ export default function ScheduleTable() {
 
             return (
               <VideoInfo isCurrentVideo={isCurrentVideo}>
-                <Thumbnail src={getYoutubeThumbnailSrc(video.id)} />
+                <Thumbnail src={getYtThumbnailSrc(video.id)} />
                 <div>
                   {dateToString(video.startTimeDate).hm} ~ {dateToString(video.endTimeDate).hm}
                   <VideoTitle>{video.title}</VideoTitle>
