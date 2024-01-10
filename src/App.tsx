@@ -4,6 +4,8 @@ import LobbyPage from "pages/LobbyPage";
 import SchedulePage from "pages/SchedulePage";
 import AdminPage from "pages/AdminPage";
 import { darkTheme, lightTheme } from "themes";
+import { useRecoilValue } from "recoil";
+import { darkmodeState } from "atoms";
 
 export default function App() {
   /* TODO 스케쥴 잘못 입력하는 경우 예외처리 (방송 준비중 화면 띄우기)
@@ -11,9 +13,11 @@ export default function App() {
     - 첫영상 기준 시각보다 일찍이거나, 영상 상영이 다 끝난 타이밍의 경우
   */
 
+  const isDarkmode = useRecoilValue(darkmodeState);
+
   return (
     <>
-      <ThemeProvider theme={lightTheme}>
+      <ThemeProvider theme={isDarkmode ? darkTheme : lightTheme}>
         <Body>
           <Routes>
             <Route path="/" element={<LobbyPage />} />

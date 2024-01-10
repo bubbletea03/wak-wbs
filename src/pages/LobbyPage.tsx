@@ -1,16 +1,24 @@
+import { darkmodeState } from "atoms";
 import Player from "components/lobby/Player";
 import ScheduleTable from "components/lobby/ScheduleTable";
 import VideoRecommends from "components/lobby/VideoRecommends";
+import { useSetRecoilState } from "recoil";
 import { loadScheduleToday } from "schedule";
 import styled from "styled-components";
 
 export default function LobbyPage() {
   const scheduleToday = loadScheduleToday();
 
+  const setDarkmodeState = useSetRecoilState(darkmodeState);
+
+  const handleDarkmodeButton = () => {
+    setDarkmodeState((prev) => !prev);
+  };
+
   return (
     <>
       <Logo src="icons/wbs_logo.png" />
-      <DarkmodeButton>
+      <DarkmodeButton onClick={handleDarkmodeButton}>
         <img src={"icons/darkmode-btn/dark" + Math.floor(Math.random() * 6 + 1) + ".jpg"} />
       </DarkmodeButton>
 
