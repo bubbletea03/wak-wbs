@@ -17,6 +17,7 @@ button {
 
 img {
   opacity: 1;
+  transition: background-color 1s;
 }
 `;
 

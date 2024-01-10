@@ -36,6 +36,9 @@ const Logo = styled.img`
   display: block;
   height: 70px;
   margin: 30px auto;
+  ${(props) =>
+    props.theme.name === "dark" &&
+    `filter: invert(41%) sepia(98%) saturate(360%) hue-rotate(83deg) brightness(89%) contrast(81%);`}
 `;
 
 const DarkmodeButton = styled.button`
