@@ -53,6 +53,6 @@ const SummaryVideo = styled.div`
 `;
 
 const Wrapper = styled.div`
-  display: flex;
-  justify-content: space-around;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
 `;

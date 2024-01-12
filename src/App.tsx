@@ -6,6 +6,7 @@ import AdminPage from "pages/AdminPage";
 import { darkTheme, lightTheme } from "themes";
 import { useRecoilValue } from "recoil";
 import { darkmodeState } from "atoms";
+import GlobalStyle from "GlobalStyle";
 
 export default function App() {
   /* TODO 스케쥴 잘못 입력하는 경우 예외처리 (방송 준비중 화면 띄우기)
@@ -18,26 +19,18 @@ export default function App() {
   return (
     <>
       <ThemeProvider theme={isDarkmode ? darkTheme : lightTheme}>
-        <Body>
-          <Routes>
-            <Route path="/" element={<LobbyPage />} />
-            <Route path="/schedule" element={<SchedulePage />} />
-            <Route path="/admin" element={<AdminPage />} />
-          </Routes>
-        </Body>
+        <GlobalStyle />
+        <Routes>
+          <Route path="/" element={<LobbyPage />} />
+          <Route path="/schedule" element={<SchedulePage />} />
+          <Route path="/admin" element={<AdminPage />} />
+        </Routes>
       </ThemeProvider>
 
       <Footer>Icons by Icons8</Footer>
     </>
   );
 }
-
-const Body = styled.div`
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background-color: ${(props) => props.theme.colors && props.theme.colors.bg};
-`;
 
 const Footer = styled.footer`
   position: absolute;

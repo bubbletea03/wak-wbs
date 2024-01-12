@@ -80,8 +80,8 @@ const AllScheduleButton = styled.button`
 
 const Table = styled.div`
   position: relative;
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
   width: 100%;
   height: 100px;
   background-color: lightgreen;
