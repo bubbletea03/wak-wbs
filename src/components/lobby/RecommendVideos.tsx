@@ -4,25 +4,29 @@ import styled from "styled-components";
 import { getYoutubeVideoTitle, getYtThumbnailSrc, youtubeUrlToId } from "utils";
 
 export default function RecommendVideos() {
-  const [recommendationVideos, setRecommendationVideos] = useState();
+  const [recommendationVideoObjects, setRecommendationVideoObjects] = useState<
+    { url: string; title: string }[]
+  >([]);
 
   useEffect(() => {
-    const selectedVideos =
+    const anyOneDayVideos =
       allScheduleList[Math.floor(Math.random() * allScheduleList.length)].videos;
-    selectedVideos.forEach((video) => {
-      // video.title = getYoutubeVideoTitle(youtubeUrlToId(video.url)).then();
+
+    anyOneDayVideos.forEach(async (video) => {
+      const url = video.url;
+      const title: string = video.title || (await getYoutubeVideoTitle(youtubeUrlToId(url)));
+      setRecommendationVideoObjects((prev) => [...prev, { url, title }]);
     });
-    // setRecommendationVideos();
   }, []);
 
   return (
     <GridWrapper>
-      {/* {recommendationVideos.map((url) => (
-        <Video key={url}>
-          <Img src={getYtThumbnailSrc(youtubeUrlToId(url))} />
-          {}
+      {recommendationVideoObjects.map((videoObj) => (
+        <Video key={videoObj.url}>
+          <Img src={getYtThumbnailSrc(youtubeUrlToId(videoObj.url))} />
+          {videoObj.title}
         </Video>
-      ))} */}
+      ))}
     </GridWrapper>
   );
 }
