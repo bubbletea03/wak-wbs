@@ -56,20 +56,22 @@ export default function Player() {
 
   return (
     <>
-      <PlayerWrapper>
+      <PlayerWrapper isPlaying={isPlaying}>
         {currentVideoState.id == "" || undefined ? (
           <div>
             <NoVideoImg src="icons/no_video.png" />
             <NoVideoText style={{ color: "white" }}>방송 준비 시간입니다.</NoVideoText>
           </div>
         ) : (
-          <YouTube
-            videoId={ThumbnailVideoId}
-            opts={opts}
-            onReady={onReady}
-            onPlay={onPlay}
-            onPause={(e) => e.target.playVideo()}
-          />
+          <>
+            <YouTube
+              videoId={ThumbnailVideoId}
+              opts={opts}
+              onReady={onReady}
+              onPlay={onPlay}
+              onPause={(e) => e.target.playVideo()}
+            />
+          </>
         )}
       </PlayerWrapper>
       <VideoTitle>{currentVideoState.title}</VideoTitle>
@@ -87,7 +89,8 @@ const VideoTitle = styled.div`
   margin: 5px 30px;
 `;
 
-const PlayerWrapper = styled.div`
+const PlayerWrapper = styled.div<{ isPlaying: boolean }>`
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -95,6 +98,7 @@ const PlayerWrapper = styled.div`
   height: fit-content;
   background-color: black;
   box-sizing: border-box;
+  ${(props) => props.isPlaying && `pointer-events: none;`}
 
   iframe {
     display: block;
