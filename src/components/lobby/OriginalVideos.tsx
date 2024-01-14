@@ -40,7 +40,8 @@ const FullVideo = styled.div`
   display: block;
   h3 {
     font-weight: 500;
-    margin: 10px 10x;
+    margin-left: 10px;
+    margin-bottom: 5px;
   }
 `;
 
@@ -48,11 +49,17 @@ const SummaryVideo = styled.div`
   display: block;
   h3 {
     font-weight: 500;
-    margin: 10px 10x;
+    margin-left: 10px;
+    margin-bottom: 5px;
   }
 `;
 
 const Wrapper = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
+  grid-column-gap: 10px;
+
+  img {
+    width: 100%;
+  }
 `;

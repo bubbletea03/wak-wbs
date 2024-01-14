@@ -62,7 +62,7 @@ export default function Player() {
       <PlayerWrapper>
         {currentVideoState.id == "" || undefined ? (
           <div>
-            <img src="icons/no_video.png" />
+            <NoVideoImg src="icons/no_video.png" />
             <NoVideoText style={{ color: "white" }}>방송 준비 시간입니다.</NoVideoText>
           </div>
         ) : (
@@ -107,4 +107,9 @@ const PlayerWrapper = styled.div`
     max-width: 700px;
     max-height: 393.75px;
   }
+`;
+
+const NoVideoImg = styled.img`
+  width: 100%;
+  height: 100%;
 `;
