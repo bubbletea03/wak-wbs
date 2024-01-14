@@ -10,25 +10,31 @@ export default function OriginalVideos() {
     <>
       {currentVideo && (
         <Wrapper>
-          <FullVideo>
-            <h3>처음부터 보려면</h3>
-            <img
-              src={
-                "https://img.youtube.com/vi/" + youtubeUrlToId(currentVideo.url) + "/mqdefault.jpg"
-              }
-            />
-          </FullVideo>
-          {currentVideo.summaryUrl && (
-            <SummaryVideo>
-              <h3>액기스로 보려면 </h3>
+          <a href={currentVideo.url} target="_blank">
+            <FullVideo>
+              <h3>처음부터 보려면</h3>
               <img
                 src={
                   "https://img.youtube.com/vi/" +
-                  youtubeUrlToId(currentVideo.summaryUrl) +
+                  youtubeUrlToId(currentVideo.url) +
                   "/mqdefault.jpg"
                 }
               />
-            </SummaryVideo>
+            </FullVideo>
+          </a>
+          {currentVideo.summaryUrl && (
+            <a href={currentVideo.summaryUrl} target="_blank">
+              <SummaryVideo>
+                <h3>액기스로 보려면 </h3>
+                <img
+                  src={
+                    "https://img.youtube.com/vi/" +
+                    youtubeUrlToId(currentVideo.summaryUrl) +
+                    "/mqdefault.jpg"
+                  }
+                />
+              </SummaryVideo>
+            </a>
           )}
         </Wrapper>
       )}
@@ -58,6 +64,7 @@ const Wrapper = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-column-gap: 10px;
+  margin: 0 10px;
 
   img {
     width: 100%;

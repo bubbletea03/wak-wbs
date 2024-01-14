@@ -20,6 +20,11 @@ img {
   opacity: 1;
   transition: background-color 1s;
 }
+
+a {
+  text-decoration: none;
+  color: black;
+}
 `;
 
 export default GlobalStyle;

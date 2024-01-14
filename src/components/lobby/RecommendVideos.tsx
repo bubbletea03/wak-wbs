@@ -22,10 +22,12 @@ export default function RecommendVideos() {
   return (
     <GridWrapper>
       {recommendationVideoObjects.map((videoObj) => (
-        <Video key={videoObj.url}>
-          <Img src={getYtThumbnailSrc(youtubeUrlToId(videoObj.url))} />
-          {videoObj.title}
-        </Video>
+        <a key={videoObj.url} href={videoObj.url} target="_blank">
+          <Video>
+            <Img src={getYtThumbnailSrc(youtubeUrlToId(videoObj.url))} />
+            <div>{videoObj.title}</div>
+          </Video>
+        </a>
       ))}
     </GridWrapper>
   );

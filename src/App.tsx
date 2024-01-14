@@ -33,7 +33,7 @@ export default function App() {
 }
 
 const Footer = styled.footer`
-  position: absolute;
+  position: relative;
   bottom: 0;
   width: 100%;
   text-align: center;
