@@ -8,9 +8,8 @@ import { getYoutubeVideoTitle } from "utils";
 export default function Player() {
   const [isPlaying, setIsPlaying] = useState(false);
 
-  const [prevVideoId, setPrevVideoId] = useState("");
   const [currentVideoState, setCurrentVideoState] = useState({ id: "", time: 0, title: "" });
-  const [firstVideoId, setFirstVideoId] = useState("");
+  const [ThumbnailVideoId, setThumbnailVideoId] = useState("");
   const [player, setPlayer] = useState<YouTubePlayer>();
   const scheduleToday = loadScheduleToday();
 
@@ -33,8 +32,8 @@ export default function Player() {
 
   const updateCurrentVideo = async () => {
     const currentVideo = scheduleToday?.getCurrentVideo();
-    if (currentVideo && currentVideo.id != currentVideoState.id) {
-      if (!firstVideoId) setFirstVideoId(currentVideo.id);
+    if (currentVideo) {
+      if (!isPlaying) setThumbnailVideoId(currentVideo.id);
       const id = currentVideo.id;
       const time =
         currentVideo.fromNum +
@@ -51,11 +50,9 @@ export default function Player() {
 
   useEffect(() => {
     if (isPlaying) {
-      console.log(player?.loadVideoById);
       player?.loadVideoById(currentVideoState.id, currentVideoState.time, undefined);
-      setPrevVideoId(currentVideoState.id);
     }
-  }, [currentVideoState]);
+  }, [currentVideoState.id]);
 
   return (
     <>
@@ -67,7 +64,7 @@ export default function Player() {
           </div>
         ) : (
           <YouTube
-            videoId={firstVideoId}
+            videoId={ThumbnailVideoId}
             opts={opts}
             onReady={onReady}
             onPlay={onPlay}
