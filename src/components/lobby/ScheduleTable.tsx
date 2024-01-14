@@ -72,7 +72,7 @@ const AllScheduleButton = styled.button`
   width: 50%;
   height: fit-content;
   font-size: 1rem;
-  margin: 0 auto;
+  margin: 4px auto;
   border: none;
   color: white;
   font-weight: bold;
@@ -82,24 +82,21 @@ const Table = styled.div`
   position: relative;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
+  grid-column-gap: 3px;
   width: 100%;
-  height: 100px;
-  background-color: lightgreen;
+  height: fit-content;
 `;
 
 const VideoInfo = styled.div<{ isCurrentVideo: boolean }>`
   display: flex;
   width: 100%;
+  max-height: 100px;
   justify-content: center;
   align-items: center;
   padding-bottom: 20px;
-  padding-right: 2px;
-  padding-left: 2px;
   color: white;
   font-weight: bold;
-  border: 2px solid white;
-  background-color: ${(props) =>
-    props.isCurrentVideo ? "rgba(0, 0, 0, 0.4)" : "rgba(0, 0, 0, 0.2)"};
+  background-color: ${(props) => (props.isCurrentVideo ? "#499b49" : "lightgreen")};
 `;
 
 const VideoTitle = styled.div`
@@ -108,7 +105,6 @@ const VideoTitle = styled.div`
 
 const Thumbnail = styled.img`
   display: block;
-  width: 100px;
-  height: auto;
+  width: 50%;
   margin-top: 10px;
 `;
