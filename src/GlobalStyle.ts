@@ -7,7 +7,8 @@ const GlobalStyle = createGlobalStyle`
     "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: ${(props) => props.theme.colors && props.theme.colors.bg};
+  background-color: ${(props) => props.theme.colors.bg};
+  color: ${(props) => props.theme.colors.text}
 }
 
 button {
@@ -23,7 +24,7 @@ img {
 
 a {
   text-decoration: none;
-  color: black;
+  color: inherit;
 }
 `;
 

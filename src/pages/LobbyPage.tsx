@@ -33,7 +33,7 @@ export default function LobbyPage() {
       ) : (
         <>
           <div>오늘 방송 일정이 없습니다! 추천영상s:....</div>
-          <RecommendVideos/>
+          <RecommendVideos />
         </>
       )}
 

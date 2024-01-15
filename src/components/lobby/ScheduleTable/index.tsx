@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { loadScheduleToday } from "schedule";
 import styled from "styled-components";
 import { dateToString, getYtThumbnailSrc } from "utils";
+import ScheduleAccordion from "./ScheduleAccordion";
 
 export default function ScheduleTable() {
   const navigate = useNavigate();
@@ -10,6 +11,7 @@ export default function ScheduleTable() {
 
   const scheduleToday = loadScheduleToday();
   const [tableShiftCount, setTableShiftCount] = useState(0);
+  const [isActiveScheduleAccordion, setIsActiveScheduleAccordion] = useState(false);
 
   if (!scheduleToday) return <></>;
 
@@ -49,7 +51,11 @@ export default function ScheduleTable() {
             );
           })}
       </Table>
-      <AllScheduleButton onClick={() => navigate("/schedule")}>전체 시간표 보기</AllScheduleButton>
+
+      <AllScheduleButton onClick={() => setIsActiveScheduleAccordion((prev) => !prev)}>
+        전체 시간표 보기
+      </AllScheduleButton>
+      {isActiveScheduleAccordion && <ScheduleAccordion />}
     </>
   );
 }
