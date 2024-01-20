@@ -6,6 +6,7 @@ import { useSetRecoilState } from "recoil";
 import { loadScheduleToday } from "schedule";
 import styled from "styled-components";
 import RecommendVideos from "components/lobby/RecommendVideos";
+import CurrentVideoCycle from "components/lobby/CurrentVideoCycle";
 
 export default function LobbyPage() {
   const scheduleToday = loadScheduleToday();
@@ -18,6 +19,7 @@ export default function LobbyPage() {
 
   return (
     <>
+      <CurrentVideoCycle />
       <Logo src="icons/wbs_logo.png" />
       <DarkmodeButton onClick={handleDarkmodeButton}>
         <img src={"icons/darkmode-btn/dark" + Math.floor(Math.random() * 6 + 1) + ".jpg"} />

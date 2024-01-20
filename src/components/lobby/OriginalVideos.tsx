@@ -1,10 +1,11 @@
+import { currentVideoState } from "atoms";
+import { useRecoilValue } from "recoil";
 import { loadScheduleToday } from "schedule";
 import styled from "styled-components";
 import { youtubeUrlToId } from "utils";
 
 export default function OriginalVideos() {
-  const scheduleToday = loadScheduleToday();
-  const currentVideo = scheduleToday?.getCurrentVideo();
+  const currentVideo = useRecoilValue(currentVideoState);
 
   return (
     <>

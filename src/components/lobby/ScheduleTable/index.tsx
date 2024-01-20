@@ -4,11 +4,14 @@ import { loadScheduleToday } from "schedule";
 import styled from "styled-components";
 import { dateToString, getYtThumbnailSrc } from "utils";
 import ScheduleAccordion from "./ScheduleAccordion";
+import { useRecoilValue } from "recoil";
+import { currentVideoState } from "atoms";
 
 export default function ScheduleTable() {
   const navigate = useNavigate();
   const ITEM_COUNT_EACH_TABLE = 3;
 
+  const currentVideo = useRecoilValue(currentVideoState);
   const scheduleToday = loadScheduleToday();
   const [tableShiftCount, setTableShiftCount] = useState(0);
   const [isActiveScheduleAccordion, setIsActiveScheduleAccordion] = useState(false);
@@ -35,10 +38,9 @@ export default function ScheduleTable() {
         {scheduleToday.videos
           .slice(tableShiftCount, tableShiftCount + ITEM_COUNT_EACH_TABLE)
           .map((video, i) => {
-            const currentVideo = scheduleToday.getCurrentVideo();
             let isCurrentVideo = false;
 
-            if (video === currentVideo) isCurrentVideo = true;
+            if (video.id === currentVideo?.id) isCurrentVideo = true;
 
             return (
               <VideoInfo isCurrentVideo={isCurrentVideo}>

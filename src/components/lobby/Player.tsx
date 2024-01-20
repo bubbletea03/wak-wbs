@@ -1,17 +1,18 @@
+import { currentVideoState } from "atoms";
 import useInterval from "hooks/useInterval";
 import { useEffect, useState } from "react";
 import YouTube, { YouTubeEvent, YouTubePlayer, YouTubeProps } from "react-youtube";
-import { loadScheduleToday } from "schedule";
+import { useRecoilValue } from "recoil";
 import styled from "styled-components";
 import { getYoutubeVideoTitle } from "utils";
 
 export default function Player() {
   const [isPlaying, setIsPlaying] = useState(false);
 
-  const [currentVideoState, setCurrentVideoState] = useState({ id: "", time: 0, title: "" });
+  const currentVideo = useRecoilValue(currentVideoState);
+  const [videoTitle, setVideoTitle] = useState("");
   const [ThumbnailVideoId, setThumbnailVideoId] = useState("");
   const [player, setPlayer] = useState<YouTubePlayer>();
-  const scheduleToday = loadScheduleToday();
 
   const onReady = (e: YouTubeEvent) => {};
 
@@ -19,7 +20,6 @@ export default function Player() {
     if (!isPlaying) {
       setIsPlaying(true);
       setPlayer(e.target);
-      updateCurrentVideo();
     }
   };
 
@@ -30,34 +30,30 @@ export default function Player() {
     },
   };
 
-  const updateCurrentVideo = async () => {
-    const currentVideo = scheduleToday?.getCurrentVideo();
+  const updateVideoTitle = async (id: string) => {
+    setVideoTitle(await getYoutubeVideoTitle(id));
+  };
+
+  useEffect(() => {
     if (currentVideo) {
-      if (!isPlaying) setThumbnailVideoId(currentVideo.id);
+      if (!isPlaying) {
+        setThumbnailVideoId(currentVideo.id);
+        return;
+      }
       const id = currentVideo.id;
       const time =
         currentVideo.fromNum +
         Math.floor((new Date().getTime() - currentVideo.startTimeDate.getTime()) / 1000);
-      const title = await getYoutubeVideoTitle(currentVideo.id);
-      setCurrentVideoState((prev) => ({ ...prev, id, time, title }));
-    }
-  };
 
-  useInterval(updateCurrentVideo, 1000);
-  useEffect(() => {
-    updateCurrentVideo();
-  }, []);
-
-  useEffect(() => {
-    if (isPlaying) {
-      player?.loadVideoById(currentVideoState.id, currentVideoState.time, undefined);
+      player?.loadVideoById(id, time, undefined);
+      updateVideoTitle(id);
     }
-  }, [currentVideoState.id]);
+  }, [currentVideo]);
 
   return (
     <>
       <PlayerWrapper isPlaying={isPlaying}>
-        {currentVideoState.id == "" || undefined ? (
+        {currentVideo?.id == "" || undefined ? (
           <div>
             <NoVideoImg src="icons/no_video.png" />
             <NoVideoText style={{ color: "white" }}>방송 준비 시간입니다.</NoVideoText>
@@ -74,8 +70,7 @@ export default function Player() {
           </>
         )}
       </PlayerWrapper>
-      <VideoTitle>{currentVideoState.title}</VideoTitle>
-      <button onClick={() => player?.setVolume(100)}>테스트 버튼</button>
+      <VideoTitle>{videoTitle}</VideoTitle>
     </>
   );
 }
