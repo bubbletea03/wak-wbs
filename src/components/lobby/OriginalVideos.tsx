@@ -12,7 +12,7 @@ export default function OriginalVideos() {
       {currentVideo && (
         <Wrapper>
           <a href={currentVideo.url} target="_blank">
-            <FullVideo>
+            <VideoSection>
               <h3>처음부터 보려면</h3>
               <img
                 src={
@@ -21,11 +21,11 @@ export default function OriginalVideos() {
                   "/mqdefault.jpg"
                 }
               />
-            </FullVideo>
+            </VideoSection>
           </a>
           {currentVideo.summaryUrl && (
             <a href={currentVideo.summaryUrl} target="_blank">
-              <SummaryVideo>
+              <VideoSection>
                 <h3>액기스로 보려면 </h3>
                 <img
                   src={
@@ -34,7 +34,7 @@ export default function OriginalVideos() {
                     "/mqdefault.jpg"
                   }
                 />
-              </SummaryVideo>
+              </VideoSection>
             </a>
           )}
         </Wrapper>
@@ -43,21 +43,20 @@ export default function OriginalVideos() {
   );
 }
 
-const FullVideo = styled.div`
+const VideoSection = styled.div`
   display: block;
+  padding: 2px 15px;
+  padding-bottom: 10px;
+
   h3 {
     font-weight: 500;
     margin-left: 10px;
     margin-bottom: 5px;
   }
-`;
 
-const SummaryVideo = styled.div`
-  display: block;
-  h3 {
-    font-weight: 500;
-    margin-left: 10px;
-    margin-bottom: 5px;
+  transition: background-color 0.2s;
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.2);
   }
 `;
 
@@ -65,7 +64,6 @@ const Wrapper = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-column-gap: 10px;
-  margin: 0 10px;
 
   img {
     width: 100%;

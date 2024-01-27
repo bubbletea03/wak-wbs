@@ -65,8 +65,8 @@ const DarkmodeButton = styled.button`
     border-radius: 50%;
   }
 
-  :hover {
+  transition: opacity 0.2s;
+  &:hover {
     opacity: 0.7;
-    transition: opacity 0.3s;
   }
 `;

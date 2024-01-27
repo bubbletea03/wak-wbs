@@ -53,7 +53,7 @@ export default function Player() {
   return (
     <>
       <PlayerWrapper isPlaying={isPlaying}>
-        {currentVideo?.id == "" || undefined ? (
+        {!currentVideo?.id ? (
           <div>
             <NoVideoImg src="icons/no_video.png" />
             <NoVideoText style={{ color: "white" }}>방송 준비 시간입니다.</NoVideoText>

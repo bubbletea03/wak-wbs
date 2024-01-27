@@ -84,6 +84,16 @@ const AllScheduleButton = styled.button`
   border: none;
   color: white;
   font-weight: bold;
+
+  transition:
+    box-shadow,
+    filter 0.2s;
+  &:hover {
+    filter: brightness(0.9);
+    box-shadow:
+      rgba(0, 0, 0, 0.1) 0px 3px 6px,
+      rgba(0, 0, 0, 0.18) 0px 3px 6px;
+  }
 `;
 
 const Table = styled.div`
