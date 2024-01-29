@@ -1,13 +1,33 @@
+import useInterval from "hooks/useInterval";
+import { useEffect, useState } from "react";
 import { loadScheduleToday } from "schedule";
+import { DetailedVideo } from "schedule/types";
 import styled from "styled-components";
+import { keyframes } from "styled-components";
 import { dateToString, getYtThumbnailSrc } from "utils";
 
 export default function ScheduleAccordion() {
   const scheduleToday = loadScheduleToday();
+  const [representedCount, setRepresentedCount] = useState(0);
+
+  function sleep(delay: number) {
+    return new Promise((resolve) => setTimeout(resolve, delay));
+  }
+
+  const increaseRepresentedCount = async () => {
+    for (let v in scheduleToday?.videos) {
+      await sleep(200);
+      setRepresentedCount((prev) => prev + 1);
+    }
+  };
+
+  useEffect(() => {
+    increaseRepresentedCount();
+  }, []);
 
   return (
     <>
-      {scheduleToday?.videos.map((video, index) => (
+      {scheduleToday?.videos.slice(0, representedCount + 1).map((video, index) => (
         <Wrapper key={index}>
           <InfoBox>
             {dateToString(video.startTimeDate).hm} <br />↓<br />
@@ -27,8 +47,9 @@ export default function ScheduleAccordion() {
 const Tail = styled.div`
   background-color: #2a1305;
   margin-left: 3px;
-  width: 5px;
-  height: 100px;
+  width: 6px;
+  height: 100%;
+  border-radius: 10px;
 `;
 
 const Thumbnail = styled.div`
@@ -36,8 +57,20 @@ const Thumbnail = styled.div`
 
   img {
     background-color: #2a1305;
-    padding: 5px;
+    padding: 7px;
     height: 90px;
+    border-radius: 10px;
+  }
+`;
+
+const fadeAndRiseAnime = keyframes`
+  0% {
+    opacity: 0;
+    transform: translate(0, 100px);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(0, 0);
   }
 `;
 
@@ -49,14 +82,16 @@ const Wrapper = styled.div`
   margin: 20px auto;
   width: 90%;
   height: 100px;
+  animation: ${fadeAndRiseAnime} 0.6s ease;
 `;
 
 const InfoBox = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #65554b;
+  background-color: #2a1305;
   color: white;
   text-align: center;
   border-radius: 10px;
+  padding: 0 10px;
 `;

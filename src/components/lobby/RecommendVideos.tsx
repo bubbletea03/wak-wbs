@@ -34,7 +34,13 @@ export default function RecommendVideos() {
 }
 
 const Video = styled.div`
-  margin: 30px 5px;
+  margin: 10px 0;
+  padding: 20px 5px;
+
+  transition: background-color 0.2s;
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.2);
+  }
 `;
 
 const Img = styled.img`
