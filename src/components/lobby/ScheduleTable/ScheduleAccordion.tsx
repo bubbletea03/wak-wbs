@@ -79,7 +79,7 @@ const Wrapper = styled.div`
   grid-template-columns: 1fr auto 5fr;
   border: 3px solid rgba(101, 85, 75, 0.1);
   grid-gap: 10px;
-  margin: 20px auto;
+  margin: 6px auto;
   width: 90%;
   height: 100px;
   animation: ${fadeAndRiseAnime} 0.6s ease;

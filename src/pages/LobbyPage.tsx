@@ -21,9 +21,11 @@ export default function LobbyPage() {
     <>
       <CurrentVideoCycle />
       <Logo src="icons/wbs_logo.png" />
-      <DarkmodeButton onClick={handleDarkmodeButton}>
-        <img src={"icons/darkmode-btn/dark" + Math.floor(Math.random() * 6 + 1) + ".jpg"} />
-      </DarkmodeButton>
+      <ButtonWrapper>
+        <DarkmodeButton onClick={handleDarkmodeButton}>
+          <img src={"icons/darkmode-btn/dark" + Math.floor(Math.random() * 6 + 1) + ".jpg"} />
+        </DarkmodeButton>
+      </ButtonWrapper>
 
       <Player />
 
@@ -53,11 +55,24 @@ const Logo = styled.img`
     `filter: invert(41%) sepia(98%) saturate(360%) hue-rotate(83deg) brightness(89%) contrast(81%);`}
 `;
 
-const DarkmodeButton = styled.button`
-  width: 70px;
+const ButtonWrapper = styled.div`
   position: absolute;
   right: 20px;
   top: 30px;
+  width: 60px;
+  height: 60px;
+  padding: 10px;
+  border-radius: 50%;
+
+  transition: background-color 0.3s;
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+`;
+
+const DarkmodeButton = styled.button`
+  width: 100%;
+  height: 100%;
   background-color: transparent;
 
   img {
@@ -65,8 +80,8 @@ const DarkmodeButton = styled.button`
     border-radius: 50%;
   }
 
-  transition: opacity 0.2s;
+  transition: filter 0.2s;
   &:hover {
-    opacity: 0.7;
+    filter: brightness(0.8);
   }
 `;
