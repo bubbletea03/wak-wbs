@@ -102,6 +102,9 @@ const PlayerWrapper = styled.div<{ isPlaying: boolean }>`
     height: 56.25vw; // 16:9 ratio
     max-width: 700px;
     max-height: 393.75px;
+    border-bottom: 7px solid #2a1305;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
   }
 `;
 
