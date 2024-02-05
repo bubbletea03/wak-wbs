@@ -8,7 +8,6 @@ const GlobalStyle = createGlobalStyle`
     font-style: normal;
   }
 
-
   body {
     margin: 0;
     font-family: 'SUITE-Regular', "Segoe UI", "Roboto", "Oxygen", "Ubuntu",
@@ -16,7 +15,8 @@ const GlobalStyle = createGlobalStyle`
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     background-color: ${(props) => props.theme.colors.bg};
-    color: ${(props) => props.theme.colors.text}
+    color: ${(props) => props.theme.colors.text};
+    transition: background-color 0.2s ease-out;
   }
 
   button {

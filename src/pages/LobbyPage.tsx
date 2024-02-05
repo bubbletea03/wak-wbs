@@ -29,22 +29,29 @@ export default function LobbyPage() {
 
       <Player />
 
-      {scheduleToday ? (
-        <>
-          <ScheduleTable />
-          <OriginalVideos />
-        </>
-      ) : (
-        <>
-          <div>오늘 방송 일정이 없습니다! 추천영상s:....</div>
-          <RecommendVideos />
-        </>
-      )}
+      <LowerSection>
+        {scheduleToday ? (
+          <>
+            <ScheduleTable />
+            <OriginalVideos />
+          </>
+        ) : (
+          <>
+            <div>오늘 방송 일정이 없습니다! 추천영상s:....</div>
+            <RecommendVideos />
+          </>
+        )}
+      </LowerSection>
 
       {/* <AllSchedule /> */}
     </>
   );
 }
+
+const LowerSection = styled.div`
+  margin: 0 auto;
+  max-width: 650px;
+`;
 
 const Logo = styled.img`
   display: block;
