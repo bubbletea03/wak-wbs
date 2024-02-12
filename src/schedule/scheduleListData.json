@@ -1,7 +1,7 @@
 [
   {
-    "date": "2/04",
-    "firstStartTime": "20:04",
+    "date": "2/12",
+    "firstStartTime": "18:51",
     "videos": [
       {
         "title": "편성표 제목1",
@@ -14,7 +14,8 @@
         "title": "편성표 제목2",
         "url": "https://www.youtube.com/watch?v=3Hr35Kr2aXA",
         "from": "5:00",
-        "to": "15:00"
+        "to": "15:00",
+        "summaryUrl": "https://www.youtube.com/watch?v=_7-Z2MDx7YU"
       },
       {
         "title": "편성표 제목3",

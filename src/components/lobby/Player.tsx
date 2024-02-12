@@ -90,8 +90,10 @@ const PlayerWrapper = styled.div<{ isPlaying: boolean }>`
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: fit-content;
+  max-width: 650px;
+  margin: 0 auto;
   background-color: black;
+  height: fit-content;
   box-sizing: border-box;
   ${(props) => props.isPlaying && `pointer-events: none;`}
 
@@ -100,8 +102,8 @@ const PlayerWrapper = styled.div<{ isPlaying: boolean }>`
     box-sizing: content-box;
     width: 100vw;
     height: 56.25vw; // 16:9 ratio
-    max-width: 700px;
-    max-height: 393.75px;
+    max-width: 650px;
+    max-height: 365.625px;
     border-bottom: 7px solid #2a1305;
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
@@ -110,5 +112,5 @@ const PlayerWrapper = styled.div<{ isPlaying: boolean }>`
 
 const NoVideoImg = styled.img`
   width: 100%;
-  height: 100%;
+  max-width: 650px;
 `;

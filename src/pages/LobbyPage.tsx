@@ -49,6 +49,7 @@ export default function LobbyPage() {
 }
 
 const LowerSection = styled.div`
+  position: relative;
   margin: 0 auto;
   max-width: 650px;
 `;

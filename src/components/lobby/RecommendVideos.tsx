@@ -34,7 +34,7 @@ export default function RecommendVideos() {
 }
 
 const Video = styled.div`
-  margin: 10px 1vw;
+  margin: 10px 0;
   padding: 20px 5px;
 
   transition: background-color 0.2s;
@@ -50,6 +50,7 @@ const Img = styled.img`
 const GridWrapper = styled.div`
   margin-top: 30px;
   display: grid;
+  grid-column-gap: 2vw;
   width: 100%;
   grid-template-columns: 1fr 1fr;
 `;

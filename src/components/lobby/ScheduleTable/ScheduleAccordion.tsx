@@ -16,7 +16,7 @@ export default function ScheduleAccordion() {
 
   const increaseRepresentedCount = async () => {
     for (let v in scheduleToday?.videos) {
-      await sleep(200);
+      await sleep(100);
       setRepresentedCount((prev) => prev + 1);
     }
   };
@@ -27,22 +27,32 @@ export default function ScheduleAccordion() {
 
   return (
     <>
-      {scheduleToday?.videos.slice(0, representedCount + 1).map((video, index) => (
-        <Wrapper key={index}>
-          <InfoBox>
-            {dateToString(video.startTimeDate).hm} <br />↓<br />
-            {dateToString(video.endTimeDate).hm}
-          </InfoBox>
-          <Thumbnail>
-            <img src={getYtThumbnailSrc(video.id)} />
-            <Tail />
-          </Thumbnail>
-          <InfoBox>{video.title}</InfoBox>
-        </Wrapper>
-      ))}
+      <BlindLowerSection>
+        {scheduleToday?.videos.slice(0, representedCount + 1).map((video, index) => (
+          <Wrapper key={index}>
+            <InfoBox>
+              {dateToString(video.startTimeDate).hm} <br />↓<br />
+              {dateToString(video.endTimeDate).hm}
+            </InfoBox>
+            <Thumbnail>
+              <img src={getYtThumbnailSrc(video.id)} />
+              <Tail />
+            </Thumbnail>
+            <InfoBox>{video.title}</InfoBox>
+          </Wrapper>
+        ))}
+      </BlindLowerSection>
     </>
   );
 }
+
+const BlindLowerSection = styled.div`
+  position: absolute;
+  background-color: ${(props) => props.theme.colors.bg};
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+`;
 
 const Tail = styled.div`
   background-color: #2a1305;
@@ -77,12 +87,11 @@ const fadeAndRiseAnime = keyframes`
 const Wrapper = styled.div`
   display: grid;
   grid-template-columns: 1fr auto 5fr;
-  border: 3px solid rgba(101, 85, 75, 0.1);
   grid-gap: 10px;
-  margin: 6px auto;
+  margin: 12px auto;
   width: 90%;
   height: 100px;
-  animation: ${fadeAndRiseAnime} 0.6s ease;
+  animation: ${fadeAndRiseAnime} 0.6s ease-out;
 `;
 
 const InfoBox = styled.div`
