@@ -8,7 +8,7 @@ import { useRecoilValue } from "recoil";
 import { darkmodeState } from "atoms";
 import GlobalStyle from "GlobalStyle";
 import { useEffect } from "react";
-import { testAddDoc, testGetDoc } from "./firebase";
+import { setScheduleDoc } from "firebase/scheduleDoc";
 
 export default function App() {
   /* TODO 스케쥴 잘못 입력하는 경우 예외처리 (방송 준비중 화면 띄우기)
@@ -17,13 +17,6 @@ export default function App() {
   */
 
   const isDarkmode = useRecoilValue(darkmodeState);
-
-  useEffect(() => {
-    testAddDoc().then(() => {});
-    setTimeout(() => {
-      testGetDoc();
-    }, 1000);
-  }, []);
 
   return (
     <>
